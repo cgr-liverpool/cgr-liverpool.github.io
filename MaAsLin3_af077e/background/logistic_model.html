@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -39,14 +39,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f49bdc1f5e07f1b09f02a55de2603af2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-b4c532d157eff3e614fd3a4ead26d9d3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-f49bdc1f5e07f1b09f02a55de2603af2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c534a626e2d96700e75a432a0e9991e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-0a9e1fffec30c83bdb34004a38d2ef46.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-2c534a626e2d96700e75a432a0e9991e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -302,8 +302,8 @@ window.Quarto = {
 <span class="menu-text">Setup</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../abundance/abundance.html"> 
-<span class="menu-text">Abundance</span></a>
+    <a class="nav-link" href="../relative/relative.html"> 
+<span class="menu-text">Relative</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../appendix/appendix.html"> 
@@ -426,9 +426,15 @@ window.Quarto = {
 
 <section id="logistic-model" class="level1">
 <h1>Logistic model</h1>
+<center>
+<img src="..\images/prevalence.png" class="img-fluid" style="width:200px; background:white; border-radius:5px">
+</center>
 <p>MaAsLin3 carries out binary logistic regression for prevalence (absence/presence) testing.</p>
 <section id="binary-logistics" class="level2">
 <h2 class="anchored" data-anchor-id="binary-logistics">Binary logistics</h2>
+<center>
+<img src="..\images/binary.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
+</center>
 <p>Binary logistic regression is used to determine the probability of one of two outcomes. In MaAsLin3 this is to test prevalence, determining the probability of a feature to be present given an effect.</p>
 <p>With this test we could attempt to answer the following example questions:</p>
 <ul>
@@ -440,6 +446,9 @@ window.Quarto = {
 </section>
 <section id="log-oddslogit" class="level2">
 <h2 class="anchored" data-anchor-id="log-oddslogit">Log-odds/logit</h2>
+<center>
+<img src="..\images/coin_toss.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
+</center>
 <p>Log-odds, also know as the logit, is equal to the logarithm of the odds. The equation is:</p>
 <p><span class="math display">\[
 logit = ln(p/1-p)
@@ -536,7 +545,7 @@ logit = ln(p/1-p)
 </div>
 <p>In the plot we can see the logit value slowly changes moving away from a probability of 0.5. Once the probability is &gt;0.99/&lt;0.01 the logit value quickly increases/decreases getting closer and closer to infinity. This is the main reason we use logit scale. It is hard for us to see the difference between a probability of 0.000859 and 0.00006041 but easier for us to differentiate between their logit values of -7.058882 and -9.71429.</p>
 <p>I hope this gives you a clear idea of the log-odds/logit value so you interrupt them in future analysis.</p>
-<p>More information on how to interpret the logit value is found later in the abundance section: <a href="../abundance/metrics.html#coefficients">MaAsLin3 coefficients</a></p>
+<p>More information on how to interpret the logit value is found later in the abundance section: <a href="../relative/metrics.html#coefficients">MaAsLin3 coefficients</a></p>
 
 
 </section>
@@ -1179,7 +1188,7 @@ window.onload = function() {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><a href="https://www.liverpool.ac.uk/genomic-research/"><img src="../images/CGR_large.png" alt="CGR" height="60"></a></p>
+<p><a href="https://www.liverpool.ac.uk/genomic-research/"><img src="..\images/CGR_large.png" alt="CGR" height="60"></a></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
