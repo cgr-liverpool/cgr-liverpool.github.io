@@ -239,7 +239,7 @@
     "href": "relative/notebook.html",
     "title": "Notebook setup",
     "section": "",
-    "text": "Notebook setup\n\n\n\nThe first step is to ensure you have carried out the setup instructions and run through the jupyter tutorial if you are not familiar with it.\nNavigate to your directory “~/maaslin3_workshop/relative” in your jupyter file explorer.\nPrior to analysis you’ll need to create a new jupyter notebook called 1-Data.ipynb in the metagenome directory.\nAt the top create a markdown cell with the following headers.\n\n# 1-Data\n## Libraries\n\nThen we’ll load all the libraries we need in a new code cell.\n\nlibrary(\"tidyverse\")\n\nPlease create other useful markdown cells in this and future notebooks. Once you’re ready we’ll start with data importing and processing in the next page.",
+    "text": "Notebook setup\n\n\n\nThe first step is to ensure you have carried out the setup instructions and run through the jupyter tutorial if you are not familiar with it.\nNavigate to your directory “~/maaslin3_workshop/relative” in your jupyter file explorer.\nPrior to analysis you’ll need to create a new jupyter notebook called 1-Data.ipynb.\nAt the top create a markdown cell with the following headers.\n\n# 1-Data\n## Libraries\n\nThen we’ll load all the libraries we need in a new code cell.\n\nlibrary(\"tidyverse\")\n\nPlease create other useful markdown cells in this and future notebooks. Once you’re ready we’ll start with data importing and processing in the next page.",
     "crumbs": [
       "Relative",
       "Notebook setup"
@@ -683,11 +683,338 @@
     ]
   },
   {
-    "objectID": "quantitative/quantitative.html",
-    "href": "quantitative/quantitative.html",
-    "title": "Quantitative",
+    "objectID": "quantitative/visit_investigation.html",
+    "href": "quantitative/visit_investigation.html",
+    "title": "Visit investigation",
     "section": "",
-    "text": "Quantitative\nNOTE for matthew for input data already scaled to absolute abundances the following parameters should be used normalization = NONE median_comparison_abundance = FALSE Do not include anything for unscaled_abundance INfo: https://github.com/biobakery/Maaslin3#compositionality-corrections-continued"
+    "text": "In this page you’ll investigate the associations for the various visit comparisons. As a reminder each visit comparison is against the baseline (visit 1).\n\n\nThe significant associations of the visit comparisons may be masked by the Sample site associations in our summary plot. Therefore, we’ll create a summary plot based on the Visit associations only.\nThe MaAsLin3 replot function only needs the “all_results.tsv” to work. To produce our desired summary plot we’ll carry out the below steps:\n\nCreate a subdirectory to contain our new results and plot\nCreate an “all_results.tsv” with our visit associations\nReplot to only create our new summary plot\n\n\n\nCreate a subdirectory within “PMP_output” called “Visit_summary”:\n\ndir.create(\"./PMP_output/Visit_summary\")\n\n\n\n\nThe replotting function requires the “all_results.tsv”. We’ll create on in the created directory only containing the Visit associations.\n\n#Read in all results\nall_res_tbl &lt;- readr::read_delim(\n    file = \"./PMP_output/all_results.tsv\", \n    delim=\"\\t\")\n#Subset it for only visits\nvisit_all_tbl &lt;- all_res_tbl |&gt;\n    dplyr::filter(metadata==\"Visit\") |&gt;\n    #Arrange by individual q-value\n    dplyr::arrange(qval_individual)\n#Write out into ./PMP_output/Visit_summary\nvisit_all_tbl |&gt;\n    readr::write_delim(\"./PMP_output/Visit_summary/all_results.tsv\", delim=\"\\t\")\n\n\n\n\nBefore carrying out the replot function we’ll need to set the order of the coefficient and heatmap variables we want to include.\n\n#Set order of Coefficient plot variables\ncoef_plot_variables &lt;- c(\"Visit V2\", \"Visit V12\")\n#Set order of heatmap variables for plot recreation\n#Do not include V1 since it is the reference\nheatmap_variables &lt;-\n    c(\"Visit V2\",\"Visit V3\",\"Visit V4\",\"Visit V5\",\"Visit V6\",\n     \"Visit V7\",\"Visit V8\",\"Visit V9\",\"Visit V10\",\"Visit V11\",\"Visit V12\")\n\nNow replot. This time we’ll set plot_association=FALSE so it does not create all the individual plots and we only get the summary plot. This is because all the association/individual plots are already in “PMP_output/figures”.\n\n#MaAsLin3 replot\nmaaslin3::maaslin_plot_results_from_output(\n    output = 'PMP_output/Visit_summary',\n    metadata = metadata,\n    normalization = 'NONE',\n    transform = 'LOG',\n    #Max value of qval_individual value for plot to be generated\n    #qval_joint has no effect on this\n    max_significance = 0.1,\n    median_comparison_abundance = FALSE,\n    median_comparison_prevalence = FALSE,\n    #Heatmap and coefficient variables\n    heatmap_vars = heatmap_variables,\n    coef_plot_vars = coef_plot_variables,\n    #Only plot the summary plot\n    plot_association=FALSE,\n    max_pngs = 500\n)\n\nOpen the file through your jupyter file explorer and you’ll hopefully see the below plot.\n\n\n\n\n\n\n\n\n\n\n\nIn the summary plot we can see that the following features have multiple significant features. Below are MCQs based on the association figures for the features.\n\n\n\n\n\nLook at the logistic/prevalence plots for the following features:\n\nStaphyloccocus hominis\nAcinetobacter baumannii\nStaphyloccocus aureus\n\nWith the plots answer the below MCQs.\nWhich feature has a significant association for the V4 comparison?\n\n Staphyloccocus hominis Acinetobacter baumannii Staphyloccocus aureus\n\nWhich feature has the lowest prevalence for V1?\n\n Staphyloccocus hominis Acinetobacter baumannii Staphyloccocus aureus\n\nWhich feature has the largest prevalence % difference between V1 and V12?\n\n Staphyloccocus hominis Acinetobacter baumannii Staphyloccocus aureus\n\n\n\n\n\n\n\nLook at the linear/abundance plots for the following features:\n\nStretococcus sanguinis\nStaphyloccocus epidermidis\nStaphyloccocus warneri\n\nWhich feature has the lowest media abundance values?\n\n Stretococcus sanguinis Staphyloccocus epidermidis Staphyloccocus warneri\n\nWhich feature has the largest range of abundance values?\n\n Stretococcus sanguinis Staphyloccocus epidermidis Staphyloccocus warneri\n\nWhich feature has the most power (i.e. the most amount samples with the feature present)?\n\n Stretococcus sanguinis Staphyloccocus epidermidis Staphyloccocus warneri\n\nSuperb! Next we’ll look at a variety of different ways to analyse the data with MaAsLin3.\nReminder: Please save your notebooks frequently as you work on them.",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Visit investigation"
+    ]
+  },
+  {
+    "objectID": "quantitative/visit_investigation.html#visit-summary-plot",
+    "href": "quantitative/visit_investigation.html#visit-summary-plot",
+    "title": "Visit investigation",
+    "section": "",
+    "text": "The significant associations of the visit comparisons may be masked by the Sample site associations in our summary plot. Therefore, we’ll create a summary plot based on the Visit associations only.\nThe MaAsLin3 replot function only needs the “all_results.tsv” to work. To produce our desired summary plot we’ll carry out the below steps:\n\nCreate a subdirectory to contain our new results and plot\nCreate an “all_results.tsv” with our visit associations\nReplot to only create our new summary plot\n\n\n\nCreate a subdirectory within “PMP_output” called “Visit_summary”:\n\ndir.create(\"./PMP_output/Visit_summary\")\n\n\n\n\nThe replotting function requires the “all_results.tsv”. We’ll create on in the created directory only containing the Visit associations.\n\n#Read in all results\nall_res_tbl &lt;- readr::read_delim(\n    file = \"./PMP_output/all_results.tsv\", \n    delim=\"\\t\")\n#Subset it for only visits\nvisit_all_tbl &lt;- all_res_tbl |&gt;\n    dplyr::filter(metadata==\"Visit\") |&gt;\n    #Arrange by individual q-value\n    dplyr::arrange(qval_individual)\n#Write out into ./PMP_output/Visit_summary\nvisit_all_tbl |&gt;\n    readr::write_delim(\"./PMP_output/Visit_summary/all_results.tsv\", delim=\"\\t\")\n\n\n\n\nBefore carrying out the replot function we’ll need to set the order of the coefficient and heatmap variables we want to include.\n\n#Set order of Coefficient plot variables\ncoef_plot_variables &lt;- c(\"Visit V2\", \"Visit V12\")\n#Set order of heatmap variables for plot recreation\n#Do not include V1 since it is the reference\nheatmap_variables &lt;-\n    c(\"Visit V2\",\"Visit V3\",\"Visit V4\",\"Visit V5\",\"Visit V6\",\n     \"Visit V7\",\"Visit V8\",\"Visit V9\",\"Visit V10\",\"Visit V11\",\"Visit V12\")\n\nNow replot. This time we’ll set plot_association=FALSE so it does not create all the individual plots and we only get the summary plot. This is because all the association/individual plots are already in “PMP_output/figures”.\n\n#MaAsLin3 replot\nmaaslin3::maaslin_plot_results_from_output(\n    output = 'PMP_output/Visit_summary',\n    metadata = metadata,\n    normalization = 'NONE',\n    transform = 'LOG',\n    #Max value of qval_individual value for plot to be generated\n    #qval_joint has no effect on this\n    max_significance = 0.1,\n    median_comparison_abundance = FALSE,\n    median_comparison_prevalence = FALSE,\n    #Heatmap and coefficient variables\n    heatmap_vars = heatmap_variables,\n    coef_plot_vars = coef_plot_variables,\n    #Only plot the summary plot\n    plot_association=FALSE,\n    max_pngs = 500\n)\n\nOpen the file through your jupyter file explorer and you’ll hopefully see the below plot.",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Visit investigation"
+    ]
+  },
+  {
+    "objectID": "quantitative/visit_investigation.html#mcqs",
+    "href": "quantitative/visit_investigation.html#mcqs",
+    "title": "Visit investigation",
+    "section": "",
+    "text": "In the summary plot we can see that the following features have multiple significant features. Below are MCQs based on the association figures for the features.\n\n\n\n\n\nLook at the logistic/prevalence plots for the following features:\n\nStaphyloccocus hominis\nAcinetobacter baumannii\nStaphyloccocus aureus\n\nWith the plots answer the below MCQs.\nWhich feature has a significant association for the V4 comparison?\n\n Staphyloccocus hominis Acinetobacter baumannii Staphyloccocus aureus\n\nWhich feature has the lowest prevalence for V1?\n\n Staphyloccocus hominis Acinetobacter baumannii Staphyloccocus aureus\n\nWhich feature has the largest prevalence % difference between V1 and V12?\n\n Staphyloccocus hominis Acinetobacter baumannii Staphyloccocus aureus\n\n\n\n\n\n\n\nLook at the linear/abundance plots for the following features:\n\nStretococcus sanguinis\nStaphyloccocus epidermidis\nStaphyloccocus warneri\n\nWhich feature has the lowest media abundance values?\n\n Stretococcus sanguinis Staphyloccocus epidermidis Staphyloccocus warneri\n\nWhich feature has the largest range of abundance values?\n\n Stretococcus sanguinis Staphyloccocus epidermidis Staphyloccocus warneri\n\nWhich feature has the most power (i.e. the most amount samples with the feature present)?\n\n Stretococcus sanguinis Staphyloccocus epidermidis Staphyloccocus warneri\n\nSuperb! Next we’ll look at a variety of different ways to analyse the data with MaAsLin3.\nReminder: Please save your notebooks frequently as you work on them.",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Visit investigation"
+    ]
+  },
+  {
+    "objectID": "quantitative/quant_tasks.html",
+    "href": "quantitative/quant_tasks.html",
+    "title": "Quantitative table",
+    "section": "",
+    "text": "As you are more familiar with interrogating maaslin3() you’ll be tasked with creating the R object and HTML table of the significant results.\nCode solutions are in expandable boxes. Please make your best attempt before looking at the solutions.\n\n\n\n\n\nCarry out the below steps with the results in the output file “./PMP_output/significant_results.tsv”.\n\nRead in the file as a tibble called sig_res_tbl\nSave the R object sig_res_tbl as a file with the filepath “./PMP_output/significant_results.RData”\nCreate and save a HTML table using sig_res_tbl\n\nGuidance can be found in the Relative significant results table page.\nTip: You can open your notebooks from the relative section to copy, paste, and then edit your code.\n\n\nCreate tibble solution\n\n\n#Save significant results table\nsig_res_tbl &lt;- readr::read_delim(\n    file = \"./PMP_output/significant_results.tsv\", \n    delim=\"\\t\")\n`r unhide()`\n\n`r hide(\"Save R object as file solution\")`\n\n\n#Save significant results table\nsave(sig_res_tbl, file=\"./PMP_output/significant_results.RData\")\n\n\n\n\nHTML table solution\n\n\n#Save as HTML\nsig_res_dt &lt;- DT::datatable(sig_res_tbl, options = list(pageLength = 20))\n#Open created html table in jupyter notebook\nhtmlwidgets::saveWidget(widget = sig_res_dt, \n                        file = \"./PMP_output/significant_results.html\", \n                        selfcontained = TRUE)\n\n\n\n\n\n\n\n\nUsing the HTML table you created and/or using code to interrogate sig_res_tbl answer the below MCQs.\n\nWhich feature has the largest positive coefficient value?\n\n Cutibacterium.namnetense Malassezia Staphylococcus.aureus\n\n\n\n\nMCQ1 code solution\n\n\n#MCQ1\n#Feature with the highest coefficient\nsig_res_tbl |&gt;\n    dplyr::slice_max(coef, n=1) |&gt; pull(feature)\n\n\n\nWhich feature has the most negative coefficient value for the V12 associations?\n\n Cutibacterium.namnetense Malassezia Staphylococcus.aureus\n\n\n\n\nMCQ2 code solution\n\n\n#MCQ2\n#Feature with the most negative coefficient\n# for the Visit V12 associations\nsig_res_tbl |&gt;\n    dplyr::filter(name==\"VisitV12\") |&gt;\n    dplyr::slice_min(coef, n=1) |&gt; pull(feature)\n\n\n\nWhich feature has the most significant individual q-value for the Cheek associations?\n\n Cutibacterium.namnetense Malassezia Staphylococcus.aureus\n\n\n\n\nMCQ3 code solution\n\n\n#MCQ3\n#Feature with the most significant q-value \n# for the Cheek association\nsig_res_tbl |&gt;\n    dplyr::filter(name==\"SampleCheek\") |&gt;\n    dplyr::slice_min(qval_individual, n=1) |&gt; pull(feature)\n\n\nThe next three questions are designed to be answered with code. Please look at the dplyr page of the tidyverse materials.\n\nHow many prevalence associations are there with an individual q-value less than 0.1?\n\n 10 19 90\n\n\n\n\nMCQ4 code solution\n\n\n#MCQ4\n#Number of prevalence associations with an\n# individual q-value less than 0.1\nsig_res_tbl |&gt;\n    #Filter for prevalence model and &lt;0.1 qval\n    dplyr::filter(model==\"prevalence\" & qval_individual &lt;0.1) |&gt;\n    #Count\n    nrow()\n\n\n\nCount the number of abundance associations for each of the visit comparisons (V2, V3, V4, etc.). What is the largest number?\n\n 10 19 90\n\n\n\n\nMCQ5 code solution\n\n\n#MCQ5\n#The largest number of prevalence associations\n# across the Visit comparisons (abundance model)\nsig_res_tbl |&gt;\n    #Filter for Visit and Abundance\n    dplyr::filter(metadata==\"Visit\" & model==\"abundance\") |&gt;\n    #Count Value\n    dplyr::count(value) |&gt;\n    #Largest value\n    dplyr::slice_max(n, n=1)\n\n\n\nHow many abundance associations of scalp (compared to axilla) have a N_not_zero greater than 50% of the total samples (n)?\n\n 10 19 90\n\n\nTip: Using dplyr::mutate() with the columns n and N_not_zero can be helpful.\n\n\nMCQ6 code solution\n\n\n#MCQ6\n#Number of abundance associations of Scalp\n# with N_not_zero greater than 50% of samples\nsig_res_tbl |&gt;\n    #Filter for abundance model and Scalp associations\n    dplyr::filter(model==\"abundance\" & name==\"SampleScalp\") |&gt;\n    #Create N_not_zero_percent column\n    dplyr::mutate(N_not_zero_percent=(N_not_zero/N)*100) |&gt;\n    #Filter by N_not_percent_zero &gt; 50\n    dplyr::filter(N_not_zero_percent&gt;50) |&gt;\n    #Count number of rows\n    nrow()",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Quantitative table"
+    ]
+  },
+  {
+    "objectID": "quantitative/quant_tasks.html#significant-results-table",
+    "href": "quantitative/quant_tasks.html#significant-results-table",
+    "title": "Quantitative table",
+    "section": "",
+    "text": "Carry out the below steps with the results in the output file “./PMP_output/significant_results.tsv”.\n\nRead in the file as a tibble called sig_res_tbl\nSave the R object sig_res_tbl as a file with the filepath “./PMP_output/significant_results.RData”\nCreate and save a HTML table using sig_res_tbl\n\nGuidance can be found in the Relative significant results table page.\nTip: You can open your notebooks from the relative section to copy, paste, and then edit your code.\n\n\nCreate tibble solution\n\n\n#Save significant results table\nsig_res_tbl &lt;- readr::read_delim(\n    file = \"./PMP_output/significant_results.tsv\", \n    delim=\"\\t\")\n`r unhide()`\n\n`r hide(\"Save R object as file solution\")`\n\n\n#Save significant results table\nsave(sig_res_tbl, file=\"./PMP_output/significant_results.RData\")\n\n\n\n\nHTML table solution\n\n\n#Save as HTML\nsig_res_dt &lt;- DT::datatable(sig_res_tbl, options = list(pageLength = 20))\n#Open created html table in jupyter notebook\nhtmlwidgets::saveWidget(widget = sig_res_dt, \n                        file = \"./PMP_output/significant_results.html\", \n                        selfcontained = TRUE)",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Quantitative table"
+    ]
+  },
+  {
+    "objectID": "quantitative/quant_tasks.html#mcqs",
+    "href": "quantitative/quant_tasks.html#mcqs",
+    "title": "Quantitative table",
+    "section": "",
+    "text": "Using the HTML table you created and/or using code to interrogate sig_res_tbl answer the below MCQs.\n\nWhich feature has the largest positive coefficient value?\n\n Cutibacterium.namnetense Malassezia Staphylococcus.aureus\n\n\n\n\nMCQ1 code solution\n\n\n#MCQ1\n#Feature with the highest coefficient\nsig_res_tbl |&gt;\n    dplyr::slice_max(coef, n=1) |&gt; pull(feature)\n\n\n\nWhich feature has the most negative coefficient value for the V12 associations?\n\n Cutibacterium.namnetense Malassezia Staphylococcus.aureus\n\n\n\n\nMCQ2 code solution\n\n\n#MCQ2\n#Feature with the most negative coefficient\n# for the Visit V12 associations\nsig_res_tbl |&gt;\n    dplyr::filter(name==\"VisitV12\") |&gt;\n    dplyr::slice_min(coef, n=1) |&gt; pull(feature)\n\n\n\nWhich feature has the most significant individual q-value for the Cheek associations?\n\n Cutibacterium.namnetense Malassezia Staphylococcus.aureus\n\n\n\n\nMCQ3 code solution\n\n\n#MCQ3\n#Feature with the most significant q-value \n# for the Cheek association\nsig_res_tbl |&gt;\n    dplyr::filter(name==\"SampleCheek\") |&gt;\n    dplyr::slice_min(qval_individual, n=1) |&gt; pull(feature)\n\n\nThe next three questions are designed to be answered with code. Please look at the dplyr page of the tidyverse materials.\n\nHow many prevalence associations are there with an individual q-value less than 0.1?\n\n 10 19 90\n\n\n\n\nMCQ4 code solution\n\n\n#MCQ4\n#Number of prevalence associations with an\n# individual q-value less than 0.1\nsig_res_tbl |&gt;\n    #Filter for prevalence model and &lt;0.1 qval\n    dplyr::filter(model==\"prevalence\" & qval_individual &lt;0.1) |&gt;\n    #Count\n    nrow()\n\n\n\nCount the number of abundance associations for each of the visit comparisons (V2, V3, V4, etc.). What is the largest number?\n\n 10 19 90\n\n\n\n\nMCQ5 code solution\n\n\n#MCQ5\n#The largest number of prevalence associations\n# across the Visit comparisons (abundance model)\nsig_res_tbl |&gt;\n    #Filter for Visit and Abundance\n    dplyr::filter(metadata==\"Visit\" & model==\"abundance\") |&gt;\n    #Count Value\n    dplyr::count(value) |&gt;\n    #Largest value\n    dplyr::slice_max(n, n=1)\n\n\n\nHow many abundance associations of scalp (compared to axilla) have a N_not_zero greater than 50% of the total samples (n)?\n\n 10 19 90\n\n\nTip: Using dplyr::mutate() with the columns n and N_not_zero can be helpful.\n\n\nMCQ6 code solution\n\n\n#MCQ6\n#Number of abundance associations of Scalp\n# with N_not_zero greater than 50% of samples\nsig_res_tbl |&gt;\n    #Filter for abundance model and Scalp associations\n    dplyr::filter(model==\"abundance\" & name==\"SampleScalp\") |&gt;\n    #Create N_not_zero_percent column\n    dplyr::mutate(N_not_zero_percent=(N_not_zero/N)*100) |&gt;\n    #Filter by N_not_percent_zero &gt; 50\n    dplyr::filter(N_not_zero_percent&gt;50) |&gt;\n    #Count number of rows\n    nrow()",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Quantitative table"
+    ]
+  },
+  {
+    "objectID": "quantitative/notebook.html",
+    "href": "quantitative/notebook.html",
+    "title": "Notebook setup",
+    "section": "",
+    "text": "Notebook setup\n\n\n\nThe first step is to ensure you have carried out the setup instructions and run through the jupyter tutorial if you are not familiar with it. Preferably you have run through the relative abundance section but it is not essential to being able to run this section.\nNavigate to your directory “~/maaslin3_workshop/quantitative” in your jupyter file explorer.\nPrior to analysis you’ll need to create a new jupyter notebook called 1-Data.ipynb.\nAt the top create a markdown cell with the following headers.\n\n# 1-Data\n## Libraries\n\nThen we’ll load all the libraries we need in a new code cell.\n\nlibrary(\"tidyverse\")\n\nPlease create other useful markdown cells in this and future notebooks. Once you’re ready we’ll start with data importing and processing in the next page.",
+    "crumbs": [
+      "Quantitative",
+      "Notebook setup"
+    ]
+  },
+  {
+    "objectID": "quantitative/maaslin3.html",
+    "href": "quantitative/maaslin3.html",
+    "title": "Quantitative MaAsLin3",
+    "section": "",
+    "text": "For our first set of analysis we will keep it fairly straightforward so we can focus on:\n\nThe parameters needed for abundance counts (specifically for the PMP data)\nHow to utilise longitudinal metadata\n\n\n\n\n\n\nCreate and open a new jupyter notebook called “2-Visit_and_sample_main_effects.ipynb”.\nCreate a markdown cell at the top with:\n\n# Visit & Sample main effects\n## Libraries\n\nIn a code cell load the required libraries and data.\n\n#Library\nlibrary(\"maaslin3\")\nlibrary(\"tidyverse\")\n#Load data\nload(\"taxa_table.RData\")\nload(\"metadata.RData\")\n\n\n\n\n\n\n\nRun the MaAsLin3 analysis. As the dataset contains a lot fewer species the analysis should not take too long to run (~10 minutes).\n\n#MaAsLin3 analysis\n#Set seed so any reruns produce identical results\nset.seed(111)\n#Command\nfit_out &lt;- maaslin3(input_data = taxa_table,\n                    input_metadata = metadata,\n                    output = 'PMP_output',\n                    #Fixed effect\n                    #Main effects of Visit and Sample\n                    #Random effect of Subject\n                    #Does not work with Batch as formula becomes too complex\n                    formula = '~ Visit + Sample + (1|Subject)',\n                    #No normalisation\n                    normalization = 'NONE',\n                    transform = 'LOG',\n                    augment = TRUE,\n                    standardize = TRUE,\n                    max_significance = 0.1,\n                    #No median comparison as using quantitative abundance\n                    median_comparison_abundance = FALSE,\n                    median_comparison_prevalence = FALSE,\n                    small_random_effects=FALSE,\n                    max_pngs = 250,\n                    cores = 1)\n#Set random seed back to null\nset.seed(NULL)\n\n\n\n\nThe changes for quantitative abundance analysis are:\n\nnormalization = NONE: We do not carry out normalisation as we are interested in the absolute/quantitative abundances not the relative abundances\n\nSource: https://forum.biobakery.org/t/maaslin3-with-estimated-microbial-load/7668\n\nmedian_comparison_abundance = FALSE: This is always set with absolute/quantitative abundance\n\nSource: https://github.com/biobakery/biobakery/wiki/MaAsLin3#41-absolute-abundance\n\n\nAnalysis is different again if you are using:\n\nSpike-ins: Having a species of known quantitative abundance to scale the other species to\nTotal abundance scaling: Having a total quantitative abundance of all the species to scale them all to\n\n\n\n\n\n\n\nParameters are listed in the relative abundance MaAsLin3 page",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Quantitative MaAsLin3"
+    ]
+  },
+  {
+    "objectID": "quantitative/maaslin3.html#notebook-setup",
+    "href": "quantitative/maaslin3.html#notebook-setup",
+    "title": "Quantitative MaAsLin3",
+    "section": "",
+    "text": "Create and open a new jupyter notebook called “2-Visit_and_sample_main_effects.ipynb”.\nCreate a markdown cell at the top with:\n\n# Visit & Sample main effects\n## Libraries\n\nIn a code cell load the required libraries and data.\n\n#Library\nlibrary(\"maaslin3\")\nlibrary(\"tidyverse\")\n#Load data\nload(\"taxa_table.RData\")\nload(\"metadata.RData\")",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Quantitative MaAsLin3"
+    ]
+  },
+  {
+    "objectID": "quantitative/maaslin3.html#maaslin3-function",
+    "href": "quantitative/maaslin3.html#maaslin3-function",
+    "title": "Quantitative MaAsLin3",
+    "section": "",
+    "text": "Run the MaAsLin3 analysis. As the dataset contains a lot fewer species the analysis should not take too long to run (~10 minutes).\n\n#MaAsLin3 analysis\n#Set seed so any reruns produce identical results\nset.seed(111)\n#Command\nfit_out &lt;- maaslin3(input_data = taxa_table,\n                    input_metadata = metadata,\n                    output = 'PMP_output',\n                    #Fixed effect\n                    #Main effects of Visit and Sample\n                    #Random effect of Subject\n                    #Does not work with Batch as formula becomes too complex\n                    formula = '~ Visit + Sample + (1|Subject)',\n                    #No normalisation\n                    normalization = 'NONE',\n                    transform = 'LOG',\n                    augment = TRUE,\n                    standardize = TRUE,\n                    max_significance = 0.1,\n                    #No median comparison as using quantitative abundance\n                    median_comparison_abundance = FALSE,\n                    median_comparison_prevalence = FALSE,\n                    small_random_effects=FALSE,\n                    max_pngs = 250,\n                    cores = 1)\n#Set random seed back to null\nset.seed(NULL)",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Quantitative MaAsLin3"
+    ]
+  },
+  {
+    "objectID": "quantitative/maaslin3.html#changes-for-quantitative-abundance-analysis",
+    "href": "quantitative/maaslin3.html#changes-for-quantitative-abundance-analysis",
+    "title": "Quantitative MaAsLin3",
+    "section": "",
+    "text": "The changes for quantitative abundance analysis are:\n\nnormalization = NONE: We do not carry out normalisation as we are interested in the absolute/quantitative abundances not the relative abundances\n\nSource: https://forum.biobakery.org/t/maaslin3-with-estimated-microbial-load/7668\n\nmedian_comparison_abundance = FALSE: This is always set with absolute/quantitative abundance\n\nSource: https://github.com/biobakery/biobakery/wiki/MaAsLin3#41-absolute-abundance\n\n\nAnalysis is different again if you are using:\n\nSpike-ins: Having a species of known quantitative abundance to scale the other species to\nTotal abundance scaling: Having a total quantitative abundance of all the species to scale them all to",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Quantitative MaAsLin3"
+    ]
+  },
+  {
+    "objectID": "quantitative/maaslin3.html#input-output-parameters",
+    "href": "quantitative/maaslin3.html#input-output-parameters",
+    "title": "Quantitative MaAsLin3",
+    "section": "",
+    "text": "Parameters are listed in the relative abundance MaAsLin3 page",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Quantitative MaAsLin3"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CGR MaAsLin3 for Unilever",
+    "section": "",
+    "text": "There are multiple sections in this website. These are described below.\n\n\n\n\n\nInfo on MaAsLin3 and Mixed effect liner models\n\n\n\n\n\n\nSetting up your environment in the workshop with (data directories & mamba) Jupyter notebook tutorial\n\n\n\n\n\n\nA standard MaAsLin3 analysis with an relative/count table based on genomic reads.\n\n\n\n\n\n\nMaAsLin3 analysis with quantitative abundances. Also involves analysis of longitudinal data.",
+    "crumbs": [
+      "Overview",
+      "CGR MaAsLin3 for Unilever"
+    ]
+  },
+  {
+    "objectID": "index.html#background",
+    "href": "index.html#background",
+    "title": "CGR MaAsLin3 for Unilever",
+    "section": "",
+    "text": "Info on MaAsLin3 and Mixed effect liner models",
+    "crumbs": [
+      "Overview",
+      "CGR MaAsLin3 for Unilever"
+    ]
+  },
+  {
+    "objectID": "index.html#setup",
+    "href": "index.html#setup",
+    "title": "CGR MaAsLin3 for Unilever",
+    "section": "",
+    "text": "Setting up your environment in the workshop with (data directories & mamba) Jupyter notebook tutorial",
+    "crumbs": [
+      "Overview",
+      "CGR MaAsLin3 for Unilever"
+    ]
+  },
+  {
+    "objectID": "index.html#relative-abundance-analysis",
+    "href": "index.html#relative-abundance-analysis",
+    "title": "CGR MaAsLin3 for Unilever",
+    "section": "",
+    "text": "A standard MaAsLin3 analysis with an relative/count table based on genomic reads.",
+    "crumbs": [
+      "Overview",
+      "CGR MaAsLin3 for Unilever"
+    ]
+  },
+  {
+    "objectID": "index.html#quantitative-abundance-analysis",
+    "href": "index.html#quantitative-abundance-analysis",
+    "title": "CGR MaAsLin3 for Unilever",
+    "section": "",
+    "text": "MaAsLin3 analysis with quantitative abundances. Also involves analysis of longitudinal data.",
+    "crumbs": [
+      "Overview",
+      "CGR MaAsLin3 for Unilever"
+    ]
+  },
+  {
+    "objectID": "background/logistic_model.html",
+    "href": "background/logistic_model.html",
+    "title": "Logistic model",
+    "section": "",
+    "text": "MaAsLin3 carries out binary logistic regression for prevalence (absence/presence) testing.\n\n\n\n\n\nBinary logistic regression is used to determine the probability of one of two outcomes. In MaAsLin3 this is to test prevalence, determining the probability of a feature to be present given an effect.\nWith this test we could attempt to answer the following example questions:\n\nIs Helicobacter pylori more likely to be present in patients with ulcers compared to healthy controls?\nAre Corynebacterium species more likely to be present in the Axilla compared to the cheek or scalp?\nAre certain species more likely to be present/detected in samples with higher sampling depth?\n\nWe won’t go into the workings of binary logistics rather we’ll explain its main value: log-odds/logit.\n\n\n\n\n\n\nLog-odds, also know as the logit, is equal to the logarithm of the odds. The equation is:\n\\[\nlogit = ln(p/1-p)\n\\]\nwhere:\n\n\\(p\\) = Probability\n\\(ln\\) = log\n\n\n\nFor example, lets look at the probability of having the surname Murphy if you lived in Ireland in 2014.\n\nProbability = 0.0164 (i.e 1.64%)\nOdds = 0.1752\nLogit = -4.044334\n\nFor a comparison, lets look at the probability of having the surname Gemmell if you lived in Scotland in 2014.\n\nProbability = 0.0000446 (i.e 0.00446%)\nOdds = 0.0000446\nLogit = -10.01773\n\nIn the above case we can see that the logit has a lower negative value for Gemmell which had a lower probability than Murphy. BUt what is the scale of these values?\n\n\n\nThe logit scale goes from negative infinity (probability = 0) to positive infinity (probability = 1). Our anchor point is a probability of 50 with a logit value of 0.\nTherefroe, a positive logit value means the event is more likely than not to occur (&gt;0.5 probability). Whilst, a negative logit value means the event is more likely to not occur (&lt;0.5 probability).\nSome useful benchmark figures are:\n\n\n\nProbability\nLogit\n\n\n\n\n1\nInfinite\n\n\n0.99\n4.59512\n\n\n0.9\n2.197225\n\n\n0.75\n1.098612\n\n\n0.51\n0.04000533\n\n\n0.5\n0\n\n\n0.49\n-0.04000533\n\n\n0.25\n-1.098612\n\n\n0.1\n-2.197225\n\n\n0.01\n-4.59512\n\n\n0\n-Infinite\n\n\n\nLets see the equation in the form of a plot:\n\n\n\n\n\n\n\n\n\nIn the plot we can see the logit value slowly changes moving away from a probability of 0.5. Once the probability is &gt;0.99/&lt;0.01 the logit value quickly increases/decreases getting closer and closer to infinity. This is the main reason we use logit scale. It is hard for us to see the difference between a probability of 0.000859 and 0.00006041 but easier for us to differentiate between their logit values of -7.058882 and -9.71429.\nI hope this gives you a clear idea of the log-odds/logit value so you interrupt them in future analysis.\nMore information on how to interpret the logit value is found later in the abundance section: MaAsLin3 coefficients",
+    "crumbs": [
+      "Background",
+      "Logistic regression",
+      "Logistic model"
+    ]
+  },
+  {
+    "objectID": "background/logistic_model.html#binary-logistics",
+    "href": "background/logistic_model.html#binary-logistics",
+    "title": "Logistic model",
+    "section": "",
+    "text": "Binary logistic regression is used to determine the probability of one of two outcomes. In MaAsLin3 this is to test prevalence, determining the probability of a feature to be present given an effect.\nWith this test we could attempt to answer the following example questions:\n\nIs Helicobacter pylori more likely to be present in patients with ulcers compared to healthy controls?\nAre Corynebacterium species more likely to be present in the Axilla compared to the cheek or scalp?\nAre certain species more likely to be present/detected in samples with higher sampling depth?\n\nWe won’t go into the workings of binary logistics rather we’ll explain its main value: log-odds/logit.",
+    "crumbs": [
+      "Background",
+      "Logistic regression",
+      "Logistic model"
+    ]
+  },
+  {
+    "objectID": "background/logistic_model.html#log-oddslogit",
+    "href": "background/logistic_model.html#log-oddslogit",
+    "title": "Logistic model",
+    "section": "",
+    "text": "Log-odds, also know as the logit, is equal to the logarithm of the odds. The equation is:\n\\[\nlogit = ln(p/1-p)\n\\]\nwhere:\n\n\\(p\\) = Probability\n\\(ln\\) = log\n\n\n\nFor example, lets look at the probability of having the surname Murphy if you lived in Ireland in 2014.\n\nProbability = 0.0164 (i.e 1.64%)\nOdds = 0.1752\nLogit = -4.044334\n\nFor a comparison, lets look at the probability of having the surname Gemmell if you lived in Scotland in 2014.\n\nProbability = 0.0000446 (i.e 0.00446%)\nOdds = 0.0000446\nLogit = -10.01773\n\nIn the above case we can see that the logit has a lower negative value for Gemmell which had a lower probability than Murphy. BUt what is the scale of these values?\n\n\n\nThe logit scale goes from negative infinity (probability = 0) to positive infinity (probability = 1). Our anchor point is a probability of 50 with a logit value of 0.\nTherefroe, a positive logit value means the event is more likely than not to occur (&gt;0.5 probability). Whilst, a negative logit value means the event is more likely to not occur (&lt;0.5 probability).\nSome useful benchmark figures are:\n\n\n\nProbability\nLogit\n\n\n\n\n1\nInfinite\n\n\n0.99\n4.59512\n\n\n0.9\n2.197225\n\n\n0.75\n1.098612\n\n\n0.51\n0.04000533\n\n\n0.5\n0\n\n\n0.49\n-0.04000533\n\n\n0.25\n-1.098612\n\n\n0.1\n-2.197225\n\n\n0.01\n-4.59512\n\n\n0\n-Infinite\n\n\n\nLets see the equation in the form of a plot:\n\n\n\n\n\n\n\n\n\nIn the plot we can see the logit value slowly changes moving away from a probability of 0.5. Once the probability is &gt;0.99/&lt;0.01 the logit value quickly increases/decreases getting closer and closer to infinity. This is the main reason we use logit scale. It is hard for us to see the difference between a probability of 0.000859 and 0.00006041 but easier for us to differentiate between their logit values of -7.058882 and -9.71429.\nI hope this gives you a clear idea of the log-odds/logit value so you interrupt them in future analysis.\nMore information on how to interpret the logit value is found later in the abundance section: MaAsLin3 coefficients",
+    "crumbs": [
+      "Background",
+      "Logistic regression",
+      "Logistic model"
+    ]
+  },
+  {
+    "objectID": "background/background.html",
+    "href": "background/background.html",
+    "title": "Background",
+    "section": "",
+    "text": "Background\n\n\n\nMaAsLin3 is a tool to detect feature associations based on metadata groupings using mixed effect models.\nIt carries out 2 types of association tests:\n\nAbundance testing\n\nDetermines the difference in the abundance values between groups\nCarried out with linear modelling\n\nPrevalence testing\n\nDetermines the likelihood of features being present based on groupings\nCarried out with logistic modelling\n\n\nBoth tests produce q-values plus a joint q-value is given.\nGood resource: https://mspeekenbrink.github.io/sdam-r-companion/linear-mixed-effects-models.html#formulating-and-estimating-linear-mixed-effects-models-with-lme4",
+    "crumbs": [
+      "Background"
+    ]
+  },
+  {
+    "objectID": "appendix/maaslin3.html",
+    "href": "appendix/maaslin3.html",
+    "title": "MaAsLin3 resources",
+    "section": "",
+    "text": "MaAsLin3 resources\nBelow are various resources for MaAsLin3:\n\nMaAsLin3 github main page\nMaAsLin3 Tutorial\n\nInteractions: Seeing interactions or 2 effects\n\nNote: It may be easier to create a metadata column combining 2 categorical metadata columns rather than using interactions\n\nLevel contrasts: Comparison of ordered effects\n\nThis will compare second level against the first, third level against the second etc.\nNo random effects can be used in the formula when using and ordered effect\n\nGroup-wise differences: Produce one overall p/q-value for the variable\n\nUses an ANOVA or ANOVA-like procedure",
+    "crumbs": [
+      "Appendix",
+      "MaAsLin3 resources"
+    ]
+  },
+  {
+    "objectID": "appendix/appendix.html",
+    "href": "appendix/appendix.html",
+    "title": "Appendix",
+    "section": "",
+    "text": "Appendix",
+    "crumbs": [
+      "Appendix"
+    ]
+  },
+  {
+    "objectID": "appendix/mamba.html#program-installation",
+    "href": "appendix/mamba.html#program-installation",
+    "title": "Mamba",
+    "section": "Program installation",
+    "text": "Program installation\nMamba is a reimplementation of conda. It is a great tool for installing bioinformatic packages including R packages.\nMamba github: https://github.com/mamba-org/mamba\nThe best way to use Mamba is to install Miniforge. It has both Conda and Mamba commands.\nMiniforge installation: https://github.com/conda-forge/miniforge\nMamba guide: https://mamba.readthedocs.io/en/latest/user_guide/mamba.html",
+    "crumbs": [
+      "Appendix",
+      "Mamba"
+    ]
+  },
+  {
+    "objectID": "appendix/mamba.html#maaslin3",
+    "href": "appendix/mamba.html#maaslin3",
+    "title": "Mamba",
+    "section": "MaAsLin3",
+    "text": "MaAsLin3\nTo create the mamba environment maaslin3 run the below commands in your bash. You will need to have installed mamba first.\n{bash, eval=FALSE} #maaslin3 #create conda env conda create -n maaslin3 #activate conda activate maaslin3 #Install required software conda install conda-forge::r-base=4.5.3 conda-forge::r-irkernel \\ conda-forge::r-biocmanager=1.30.27 conda-forge::r-tidyverse=2.0.0 \\ conda-forge::r-plotly=4.12.0 conda-forge::r-htmlwidgets=1.6.4 \\ conda-forge::r-rcolorbrewer=1.1.3 conda-forge::r-scales=1.4.0 \\ bioconda::bioconductor-biocparallel=1.44.0 conda-forge::r-dt=0.34 \\ biconda::bioconductor-maaslin3=1.2.0",
+    "crumbs": [
+      "Appendix",
+      "Mamba"
+    ]
+  },
+  {
+    "objectID": "appendix/mamba.html#jupyter",
+    "href": "appendix/mamba.html#jupyter",
+    "title": "Mamba",
+    "section": "jupyter",
+    "text": "jupyter\n\n\n\nIf you are running this on your own computer you can use RStudio. However, you can also use Jupyter-notebook if you are using an HPC or prefer it.\nIf using bash you will need to create an environment with Jupyter-notebook. Ensure you are in the (base) mamba environment.\n{bash, eval=FALSE} conda create -n jupyter conda activate jupyter conda install -c anaconda jupyter conda deactivate\nTo run Jupyter-notebook with your maaslin3 environment you can run the following.\n{bash, eval=FALSE} #Activate your maaslin3 env if it is not activate already mamba activate r_community #Run jupyter-notebook (may be a slightly different path) #~/miniforge/envs/jupyter/bin/jupyter-notebook",
+    "crumbs": [
+      "Appendix",
+      "Mamba"
+    ]
+  },
+  {
+    "objectID": "background/linear_model.html",
+    "href": "background/linear_model.html",
+    "title": "Linear model",
+    "section": "",
+    "text": "MaAsLin3 carries out linear modelling for abundance testing.\n\n\nA simple linear regression can be carried two variables. These variables are:\n\nThe independent variable: Not dependent on any other variable\n\nPreferably controlled by the experimenter\n\nThe dependant variable: Dependant on the independent variable\n\nThe below linear regression equation then allows you to predict the value of y when you have the value of x or vice verse.\n\\[\ny = mx + c\n\\]\nWhere:\n\n\\(y\\) = Y variable (dependant variable)\n\\(m\\) = slope coefficient\n\\(x\\) = X variable (independent variable)\n\\(c\\) = intercept coefficient (i.e. y position when x = 0)\n\nAn example of a simple linear regression on a chart can be seen below:\n\n\n\n\n\n\n\n\n\n\n\n\nAs another example lets look at those treated for an E.coli infection. In our MaAsLin3 analysis the linear equation may use the abundance of E.coli (post treatment) on the y axis the antibiotic dosage (mg/kg) on the x axis like so:\n\n\n\n\n\n\n\n\n\nIn this case we can see that the",
+    "crumbs": [
+      "Background",
+      "Linear regression",
+      "Linear model"
+    ]
+  },
+  {
+    "objectID": "background/linear_model.html#simple-linear-regression",
+    "href": "background/linear_model.html#simple-linear-regression",
+    "title": "Linear model",
+    "section": "",
+    "text": "A simple linear regression can be carried two variables. These variables are:\n\nThe independent variable: Not dependent on any other variable\n\nPreferably controlled by the experimenter\n\nThe dependant variable: Dependant on the independent variable\n\nThe below linear regression equation then allows you to predict the value of y when you have the value of x or vice verse.\n\\[\ny = mx + c\n\\]\nWhere:\n\n\\(y\\) = Y variable (dependant variable)\n\\(m\\) = slope coefficient\n\\(x\\) = X variable (independent variable)\n\\(c\\) = intercept coefficient (i.e. y position when x = 0)\n\nAn example of a simple linear regression on a chart can be seen below:",
+    "crumbs": [
+      "Background",
+      "Linear regression",
+      "Linear model"
+    ]
+  },
+  {
+    "objectID": "background/linear_model.html#e.coli-example",
+    "href": "background/linear_model.html#e.coli-example",
+    "title": "Linear model",
+    "section": "",
+    "text": "As another example lets look at those treated for an E.coli infection. In our MaAsLin3 analysis the linear equation may use the abundance of E.coli (post treatment) on the y axis the antibiotic dosage (mg/kg) on the x axis like so:\n\n\n\n\n\n\n\n\n\nIn this case we can see that the",
+    "crumbs": [
+      "Background",
+      "Linear regression",
+      "Linear model"
+    ]
   },
   {
     "objectID": "background/mixed_effects_model.html",
@@ -750,194 +1077,177 @@
     ]
   },
   {
-    "objectID": "background/linear_model.html",
-    "href": "background/linear_model.html",
-    "title": "Linear model",
+    "objectID": "quantitative/count_table.html",
+    "href": "quantitative/count_table.html",
+    "title": "Count table",
     "section": "",
-    "text": "MaAsLin3 carries out linear modelling for abundance testing.\n\n\nA simple linear regression can be carried two variables. These variables are:\n\nThe independent variable: Not dependent on any other variable\n\nPreferably controlled by the experimenter\n\nThe dependant variable: Dependant on the independent variable\n\nThe below linear regression equation then allows you to predict the value of y when you have the value of x or vice verse.\n\\[\ny = mx + c\n\\]\nWhere:\n\n\\(y\\) = Y variable (dependant variable)\n\\(m\\) = slope coefficient\n\\(x\\) = X variable (independent variable)\n\\(c\\) = intercept coefficient (i.e. y position when x = 0)\n\nAn example of a simple linear regression on a chart can be seen below:\n\n\n\n\n\n\n\n\n\n\n\n\nAs another example lets look at those treated for an E.coli infection. In our MaAsLin3 analysis the linear equation may use the abundance of E.coli (post treatment) on the y axis the antibiotic dosage (mg/kg) on the x axis like so:\n\n\n\n\n\n\n\n\n\nIn this case we can see that the",
+    "text": "The count table for MaAsLin3 needs to be a data.frame with:\n\nColumns names of features\n\nIn our case species\n\nRow names of sample names\nValues of counts\n\nIn our case abundance values\n\n\n\n\n\n\n\nFirst we will import our count data. ALthough the file suffix is “.csv” the file is actually space separated (sep=\" \").\n\n#Read in space delimited count data\ntaxa_table &lt;- read.csv(\"PMP_counts.csv\", sep = \" \", row.names=1, check.names=FALSE)\n#Check\nstr(taxa_table)\ntaxa_table[1:5,1:10]\n\n\n\n\n\n\n\nOur data is in the correct orientation. The only thing we need to do is to converts NAs to 0s.\n\n#Replace NAs with 0\ntaxa_table[is.na(taxa_table)] &lt;- 0\n#View subset\ntaxa_table[1:5,1:10]",
     "crumbs": [
-      "Background",
-      "Linear regression",
-      "Linear model"
+      "Quantitative",
+      "Data",
+      "Count table"
     ]
   },
   {
-    "objectID": "background/linear_model.html#simple-linear-regression",
-    "href": "background/linear_model.html#simple-linear-regression",
-    "title": "Linear model",
+    "objectID": "quantitative/count_table.html#import",
+    "href": "quantitative/count_table.html#import",
+    "title": "Count table",
     "section": "",
-    "text": "A simple linear regression can be carried two variables. These variables are:\n\nThe independent variable: Not dependent on any other variable\n\nPreferably controlled by the experimenter\n\nThe dependant variable: Dependant on the independent variable\n\nThe below linear regression equation then allows you to predict the value of y when you have the value of x or vice verse.\n\\[\ny = mx + c\n\\]\nWhere:\n\n\\(y\\) = Y variable (dependant variable)\n\\(m\\) = slope coefficient\n\\(x\\) = X variable (independent variable)\n\\(c\\) = intercept coefficient (i.e. y position when x = 0)\n\nAn example of a simple linear regression on a chart can be seen below:",
+    "text": "First we will import our count data. ALthough the file suffix is “.csv” the file is actually space separated (sep=\" \").\n\n#Read in space delimited count data\ntaxa_table &lt;- read.csv(\"PMP_counts.csv\", sep = \" \", row.names=1, check.names=FALSE)\n#Check\nstr(taxa_table)\ntaxa_table[1:5,1:10]",
     "crumbs": [
-      "Background",
-      "Linear regression",
-      "Linear model"
+      "Quantitative",
+      "Data",
+      "Count table"
     ]
   },
   {
-    "objectID": "background/linear_model.html#e.coli-example",
-    "href": "background/linear_model.html#e.coli-example",
-    "title": "Linear model",
+    "objectID": "quantitative/count_table.html#na-removal",
+    "href": "quantitative/count_table.html#na-removal",
+    "title": "Count table",
     "section": "",
-    "text": "As another example lets look at those treated for an E.coli infection. In our MaAsLin3 analysis the linear equation may use the abundance of E.coli (post treatment) on the y axis the antibiotic dosage (mg/kg) on the x axis like so:\n\n\n\n\n\n\n\n\n\nIn this case we can see that the",
+    "text": "Our data is in the correct orientation. The only thing we need to do is to converts NAs to 0s.\n\n#Replace NAs with 0\ntaxa_table[is.na(taxa_table)] &lt;- 0\n#View subset\ntaxa_table[1:5,1:10]",
     "crumbs": [
-      "Background",
-      "Linear regression",
-      "Linear model"
+      "Quantitative",
+      "Data",
+      "Count table"
     ]
   },
   {
-    "objectID": "appendix/mamba.html#program-installation",
-    "href": "appendix/mamba.html#program-installation",
-    "title": "Mamba",
-    "section": "Program installation",
-    "text": "Program installation\nMamba is a reimplementation of conda. It is a great tool for installing bioinformatic packages including R packages.\nMamba github: https://github.com/mamba-org/mamba\nThe best way to use Mamba is to install Miniforge. It has both Conda and Mamba commands.\nMiniforge installation: https://github.com/conda-forge/miniforge\nMamba guide: https://mamba.readthedocs.io/en/latest/user_guide/mamba.html",
-    "crumbs": [
-      "Appendix",
-      "Mamba"
-    ]
-  },
-  {
-    "objectID": "appendix/mamba.html#maaslin3",
-    "href": "appendix/mamba.html#maaslin3",
-    "title": "Mamba",
-    "section": "MaAsLin3",
-    "text": "MaAsLin3\nTo create the mamba environment maaslin3 run the below commands in your bash. You will need to have installed mamba first.\n{bash, eval=FALSE} #maaslin3 #create conda env conda create -n maaslin3 #activate conda activate maaslin3 #Install required software conda install conda-forge::r-base=4.5.3 conda-forge::r-irkernel \\ conda-forge::r-biocmanager=1.30.27 conda-forge::r-tidyverse=2.0.0 \\ conda-forge::r-plotly=4.12.0 conda-forge::r-htmlwidgets=1.6.4 \\ conda-forge::r-rcolorbrewer=1.1.3 conda-forge::r-scales=1.4.0 \\ bioconda::bioconductor-biocparallel=1.44.0 conda-forge::r-dt=0.34 \\ biconda::bioconductor-maaslin3=1.2.0",
-    "crumbs": [
-      "Appendix",
-      "Mamba"
-    ]
-  },
-  {
-    "objectID": "appendix/mamba.html#jupyter",
-    "href": "appendix/mamba.html#jupyter",
-    "title": "Mamba",
-    "section": "jupyter",
-    "text": "jupyter\n\n\n\nIf you are running this on your own computer you can use RStudio. However, you can also use Jupyter-notebook if you are using an HPC or prefer it.\nIf using bash you will need to create an environment with Jupyter-notebook. Ensure you are in the (base) mamba environment.\n{bash, eval=FALSE} conda create -n jupyter conda activate jupyter conda install -c anaconda jupyter conda deactivate\nTo run Jupyter-notebook with your maaslin3 environment you can run the following.\n{bash, eval=FALSE} #Activate your maaslin3 env if it is not activate already mamba activate r_community #Run jupyter-notebook (may be a slightly different path) #~/miniforge/envs/jupyter/bin/jupyter-notebook",
-    "crumbs": [
-      "Appendix",
-      "Mamba"
-    ]
-  },
-  {
-    "objectID": "appendix/appendix.html",
-    "href": "appendix/appendix.html",
-    "title": "Appendix",
+    "objectID": "quantitative/metadata.html",
+    "href": "quantitative/metadata.html",
+    "title": "Metadata",
     "section": "",
-    "text": "Appendix",
+    "text": "As with most analysis we require metadata. Our metadata table requires:\n\nColumns of the different metadata variables\n\nThe column names are the names of the variables\n\nRows of observations per sample\n\nThe row names need to contain the same sample names as the count table\n\n\n\n\n\n\n\nThe first step is to read in and check our metadata.\n\n#Read in metadata\n#Also space delimted\nmetadata &lt;- read.csv(\"PMP_metadata.csv\", sep=\" \", row.names=1, check.names=FALSE)\n#Check top 5 rows\nmetadata |&gt; dplyr::slice(1:5)\n\n\n\n\n\n\n\nFor our fixed effects we will need to factorise them so we can set the reference level. In our analyses we will only use the following columns for fixed effects:\n\nVisit\n\nVisit, Timepoint, and Month contain the same exact information but with different values\nVisit was chosen for clarity and consistency with other metadata variables\n\nSample\n\nFirst we’ll need to check the unique values of the columns/variables.\n\n#Unique values of fixed effect variables\nmetadata |&gt; dplyr::pull(Visit) |&gt; unique()\nmetadata |&gt; dplyr::pull(Sample) |&gt; unique()\n\nWe’ll factorise our fixed effects. For Sample we will use the Axilla group as the reference (just as we did in the relative abundance analysis). For Visit we’ll use V1 as the reference since it is the first time point in this longitudinal data.\n\n#Factorise fixed effects\nmetadata &lt;- metadata |&gt;\n    #Factorise Visit\n    dplyr::mutate(\n        Visit=factor(Visit, \n            levels = c(\"V1\",\"V2\",\"V3\",\"V4\",\"V5\",\"V6\",\"V7\",\"V8\",\"V9\",\"V10\",\"V11\",\"V12\"))) |&gt;\n    #Factorise Sample\n    dplyr::mutate(Sample=factor(Sample, levels = c(\"Axilla\", \"Cheek\", \"Scalp\")))\n\nGlimpse the metadata table.\n\nmetadata |&gt; dplyr::glimpse()\n\n\n\n\n\n\n\nThe two variables we will use as random effects are:\n\nSubject\nBatch\n\nFor clarity/tidiness we’ll change the Batch values from numbers (x) to B then numbers (Bx).\n\n#Change Batch values from x to Bx\n#e.g. 1 to B1\nmetadata &lt;- metadata |&gt;\n    mutate(Batch=gsub(pattern = \"^\", replacement=\"B\", Batch))\n#Check top 5 rows\nmetadata |&gt; dplyr::slice(1:5)\n\nWith this both our Batch and Subject variables are character column. This is what we want as we cannot use continuous variables (numbers) as random effects.\nView the different Batch and Subject values.\n\n#Unique values of random effects\nmetadata |&gt; pull(Batch) |&gt; unique()\nmetadata |&gt; pull(Subject) |&gt; unique()\n\nWe have 6 Batches and 20 different Subjects.\n\n\n\n\n\n\nWe went over the concepts and considerations of small random effects in the relative abundance section. Therefore, let’s check if we should change any parameters for our MaAsLin3 analyses when using our random effects.\n\n#Average group size of random effects\n#Batch\nmetadata |&gt;\n    dplyr::count(Batch) |&gt;\n    dplyr::pull(n) |&gt; mean()\n#Subject\nmetadata |&gt;\n    dplyr::count(Subject) |&gt;\n    dplyr::pull(n) |&gt; mean()\n\nBoth Batch and Subject have an average number of observations &gt; 4. Therefore there is no issue with small rand effects.\n\n\n\n\n\n\nAs we are directly using quantitative abundance counts we do not need to use reads. Therefore we can move onto analysis.\nSave the counts and metadata objects as files.\n\nsave(taxa_table, file = \"taxa_table.RData\")\nsave(metadata, file = \"metadata.RData\")\n\nThen:\n\nSave your jupyter notebook\nClose and halt your jupyter-notebook",
     "crumbs": [
-      "Appendix"
+      "Quantitative",
+      "Data",
+      "Metadata"
     ]
   },
   {
-    "objectID": "background/background.html",
-    "href": "background/background.html",
-    "title": "Background",
+    "objectID": "quantitative/metadata.html#read-in-metadata",
+    "href": "quantitative/metadata.html#read-in-metadata",
+    "title": "Metadata",
     "section": "",
-    "text": "Background\n\n\n\nMaAsLin3 is a tool to detect feature associations based on metadata groupings using mixed effect models.\nIt carries out 2 types of association tests:\n\nAbundance testing\n\nDetermines the difference in the abundance values between groups\nCarried out with linear modelling\n\nPrevalence testing\n\nDetermines the likelihood of features being present based on groupings\nCarried out with logistic modelling\n\n\nBoth tests produce q-values plus a joint q-value is given.\nGood resource: https://mspeekenbrink.github.io/sdam-r-companion/linear-mixed-effects-models.html#formulating-and-estimating-linear-mixed-effects-models-with-lme4",
+    "text": "The first step is to read in and check our metadata.\n\n#Read in metadata\n#Also space delimted\nmetadata &lt;- read.csv(\"PMP_metadata.csv\", sep=\" \", row.names=1, check.names=FALSE)\n#Check top 5 rows\nmetadata |&gt; dplyr::slice(1:5)",
     "crumbs": [
-      "Background"
+      "Quantitative",
+      "Data",
+      "Metadata"
     ]
   },
   {
-    "objectID": "background/logistic_model.html",
-    "href": "background/logistic_model.html",
-    "title": "Logistic model",
+    "objectID": "quantitative/metadata.html#fixed-effect",
+    "href": "quantitative/metadata.html#fixed-effect",
+    "title": "Metadata",
     "section": "",
-    "text": "MaAsLin3 carries out binary logistic regression for prevalence (absence/presence) testing.\n\n\n\n\n\nBinary logistic regression is used to determine the probability of one of two outcomes. In MaAsLin3 this is to test prevalence, determining the probability of a feature to be present given an effect.\nWith this test we could attempt to answer the following example questions:\n\nIs Helicobacter pylori more likely to be present in patients with ulcers compared to healthy controls?\nAre Corynebacterium species more likely to be present in the Axilla compared to the cheek or scalp?\nAre certain species more likely to be present/detected in samples with higher sampling depth?\n\nWe won’t go into the workings of binary logistics rather we’ll explain its main value: log-odds/logit.\n\n\n\n\n\n\nLog-odds, also know as the logit, is equal to the logarithm of the odds. The equation is:\n\\[\nlogit = ln(p/1-p)\n\\]\nwhere:\n\n\\(p\\) = Probability\n\\(ln\\) = log\n\n\n\nFor example, lets look at the probability of having the surname Murphy if you lived in Ireland in 2014.\n\nProbability = 0.0164 (i.e 1.64%)\nOdds = 0.1752\nLogit = -4.044334\n\nFor a comparison, lets look at the probability of having the surname Gemmell if you lived in Scotland in 2014.\n\nProbability = 0.0000446 (i.e 0.00446%)\nOdds = 0.0000446\nLogit = -10.01773\n\nIn the above case we can see that the logit has a lower negative value for Gemmell which had a lower probability than Murphy. BUt what is the scale of these values?\n\n\n\nThe logit scale goes from negative infinity (probability = 0) to positive infinity (probability = 1). Our anchor point is a probability of 50 with a logit value of 0.\nTherefroe, a positive logit value means the event is more likely than not to occur (&gt;0.5 probability). Whilst, a negative logit value means the event is more likely to not occur (&lt;0.5 probability).\nSome useful benchmark figures are:\n\n\n\nProbability\nLogit\n\n\n\n\n1\nInfinite\n\n\n0.99\n4.59512\n\n\n0.9\n2.197225\n\n\n0.75\n1.098612\n\n\n0.51\n0.04000533\n\n\n0.5\n0\n\n\n0.49\n-0.04000533\n\n\n0.25\n-1.098612\n\n\n0.1\n-2.197225\n\n\n0.01\n-4.59512\n\n\n0\n-Infinite\n\n\n\nLets see the equation in the form of a plot:\n\n\n\n\n\n\n\n\n\nIn the plot we can see the logit value slowly changes moving away from a probability of 0.5. Once the probability is &gt;0.99/&lt;0.01 the logit value quickly increases/decreases getting closer and closer to infinity. This is the main reason we use logit scale. It is hard for us to see the difference between a probability of 0.000859 and 0.00006041 but easier for us to differentiate between their logit values of -7.058882 and -9.71429.\nI hope this gives you a clear idea of the log-odds/logit value so you interrupt them in future analysis.\nMore information on how to interpret the logit value is found later in the abundance section: MaAsLin3 coefficients",
+    "text": "For our fixed effects we will need to factorise them so we can set the reference level. In our analyses we will only use the following columns for fixed effects:\n\nVisit\n\nVisit, Timepoint, and Month contain the same exact information but with different values\nVisit was chosen for clarity and consistency with other metadata variables\n\nSample\n\nFirst we’ll need to check the unique values of the columns/variables.\n\n#Unique values of fixed effect variables\nmetadata |&gt; dplyr::pull(Visit) |&gt; unique()\nmetadata |&gt; dplyr::pull(Sample) |&gt; unique()\n\nWe’ll factorise our fixed effects. For Sample we will use the Axilla group as the reference (just as we did in the relative abundance analysis). For Visit we’ll use V1 as the reference since it is the first time point in this longitudinal data.\n\n#Factorise fixed effects\nmetadata &lt;- metadata |&gt;\n    #Factorise Visit\n    dplyr::mutate(\n        Visit=factor(Visit, \n            levels = c(\"V1\",\"V2\",\"V3\",\"V4\",\"V5\",\"V6\",\"V7\",\"V8\",\"V9\",\"V10\",\"V11\",\"V12\"))) |&gt;\n    #Factorise Sample\n    dplyr::mutate(Sample=factor(Sample, levels = c(\"Axilla\", \"Cheek\", \"Scalp\")))\n\nGlimpse the metadata table.\n\nmetadata |&gt; dplyr::glimpse()",
     "crumbs": [
-      "Background",
-      "Logistic regression",
-      "Logistic model"
+      "Quantitative",
+      "Data",
+      "Metadata"
     ]
   },
   {
-    "objectID": "background/logistic_model.html#binary-logistics",
-    "href": "background/logistic_model.html#binary-logistics",
-    "title": "Logistic model",
+    "objectID": "quantitative/metadata.html#random-effects",
+    "href": "quantitative/metadata.html#random-effects",
+    "title": "Metadata",
     "section": "",
-    "text": "Binary logistic regression is used to determine the probability of one of two outcomes. In MaAsLin3 this is to test prevalence, determining the probability of a feature to be present given an effect.\nWith this test we could attempt to answer the following example questions:\n\nIs Helicobacter pylori more likely to be present in patients with ulcers compared to healthy controls?\nAre Corynebacterium species more likely to be present in the Axilla compared to the cheek or scalp?\nAre certain species more likely to be present/detected in samples with higher sampling depth?\n\nWe won’t go into the workings of binary logistics rather we’ll explain its main value: log-odds/logit.",
+    "text": "The two variables we will use as random effects are:\n\nSubject\nBatch\n\nFor clarity/tidiness we’ll change the Batch values from numbers (x) to B then numbers (Bx).\n\n#Change Batch values from x to Bx\n#e.g. 1 to B1\nmetadata &lt;- metadata |&gt;\n    mutate(Batch=gsub(pattern = \"^\", replacement=\"B\", Batch))\n#Check top 5 rows\nmetadata |&gt; dplyr::slice(1:5)\n\nWith this both our Batch and Subject variables are character column. This is what we want as we cannot use continuous variables (numbers) as random effects.\nView the different Batch and Subject values.\n\n#Unique values of random effects\nmetadata |&gt; pull(Batch) |&gt; unique()\nmetadata |&gt; pull(Subject) |&gt; unique()\n\nWe have 6 Batches and 20 different Subjects.",
     "crumbs": [
-      "Background",
-      "Logistic regression",
-      "Logistic model"
+      "Quantitative",
+      "Data",
+      "Metadata"
     ]
   },
   {
-    "objectID": "background/logistic_model.html#log-oddslogit",
-    "href": "background/logistic_model.html#log-oddslogit",
-    "title": "Logistic model",
+    "objectID": "quantitative/metadata.html#small-random-effects",
+    "href": "quantitative/metadata.html#small-random-effects",
+    "title": "Metadata",
     "section": "",
-    "text": "Log-odds, also know as the logit, is equal to the logarithm of the odds. The equation is:\n\\[\nlogit = ln(p/1-p)\n\\]\nwhere:\n\n\\(p\\) = Probability\n\\(ln\\) = log\n\n\n\nFor example, lets look at the probability of having the surname Murphy if you lived in Ireland in 2014.\n\nProbability = 0.0164 (i.e 1.64%)\nOdds = 0.1752\nLogit = -4.044334\n\nFor a comparison, lets look at the probability of having the surname Gemmell if you lived in Scotland in 2014.\n\nProbability = 0.0000446 (i.e 0.00446%)\nOdds = 0.0000446\nLogit = -10.01773\n\nIn the above case we can see that the logit has a lower negative value for Gemmell which had a lower probability than Murphy. BUt what is the scale of these values?\n\n\n\nThe logit scale goes from negative infinity (probability = 0) to positive infinity (probability = 1). Our anchor point is a probability of 50 with a logit value of 0.\nTherefroe, a positive logit value means the event is more likely than not to occur (&gt;0.5 probability). Whilst, a negative logit value means the event is more likely to not occur (&lt;0.5 probability).\nSome useful benchmark figures are:\n\n\n\nProbability\nLogit\n\n\n\n\n1\nInfinite\n\n\n0.99\n4.59512\n\n\n0.9\n2.197225\n\n\n0.75\n1.098612\n\n\n0.51\n0.04000533\n\n\n0.5\n0\n\n\n0.49\n-0.04000533\n\n\n0.25\n-1.098612\n\n\n0.1\n-2.197225\n\n\n0.01\n-4.59512\n\n\n0\n-Infinite\n\n\n\nLets see the equation in the form of a plot:\n\n\n\n\n\n\n\n\n\nIn the plot we can see the logit value slowly changes moving away from a probability of 0.5. Once the probability is &gt;0.99/&lt;0.01 the logit value quickly increases/decreases getting closer and closer to infinity. This is the main reason we use logit scale. It is hard for us to see the difference between a probability of 0.000859 and 0.00006041 but easier for us to differentiate between their logit values of -7.058882 and -9.71429.\nI hope this gives you a clear idea of the log-odds/logit value so you interrupt them in future analysis.\nMore information on how to interpret the logit value is found later in the abundance section: MaAsLin3 coefficients",
+    "text": "We went over the concepts and considerations of small random effects in the relative abundance section. Therefore, let’s check if we should change any parameters for our MaAsLin3 analyses when using our random effects.\n\n#Average group size of random effects\n#Batch\nmetadata |&gt;\n    dplyr::count(Batch) |&gt;\n    dplyr::pull(n) |&gt; mean()\n#Subject\nmetadata |&gt;\n    dplyr::count(Subject) |&gt;\n    dplyr::pull(n) |&gt; mean()\n\nBoth Batch and Subject have an average number of observations &gt; 4. Therefore there is no issue with small rand effects.",
     "crumbs": [
-      "Background",
-      "Logistic regression",
-      "Logistic model"
+      "Quantitative",
+      "Data",
+      "Metadata"
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "CGR MaAsLin3 for Unilever",
+    "objectID": "quantitative/metadata.html#save-and-close",
+    "href": "quantitative/metadata.html#save-and-close",
+    "title": "Metadata",
     "section": "",
-    "text": "There are multiple sections in this website. These are described below.\n\n\nThis section describing the various other sections.\n\n\n\nInfo on MaAsLin3 and Mixed effect liner models\n\n\n\nSetting up your environment in the workshop with (data directories & mamba) Jupyter notebook tutorial\n\n\n\nA standard MaAsLin3 analysis with an relative/count table based on genomic reads.\n\n\n\nMaAsLin3 analysis with quantitative abundances. Also involves analysis of longitudinal data.",
+    "text": "As we are directly using quantitative abundance counts we do not need to use reads. Therefore we can move onto analysis.\nSave the counts and metadata objects as files.\n\nsave(taxa_table, file = \"taxa_table.RData\")\nsave(metadata, file = \"metadata.RData\")\n\nThen:\n\nSave your jupyter notebook\nClose and halt your jupyter-notebook",
     "crumbs": [
-      "Overview",
-      "CGR MaAsLin3 for Unilever"
+      "Quantitative",
+      "Data",
+      "Metadata"
     ]
   },
   {
-    "objectID": "index.html#overview",
-    "href": "index.html#overview",
-    "title": "CGR MaAsLin3 for Unilever",
+    "objectID": "quantitative/quantitative.html",
+    "href": "quantitative/quantitative.html",
+    "title": "Quantitative",
     "section": "",
-    "text": "This section describing the various other sections.",
+    "text": "In this section of the course you’ll be introduced to analysing quantitative abundance data with MaAsLin3. This will involve a variety of different ways to analyse the data.\n\n\n\n\n\nOur dataset was produced with Precision Microbiome Profiling which produces quantitative abundance counts for a set of microbial species. Our data contains counts for 52 species and a column for 16s rRNA.\nThe 16s rRNA column is an assay of its own that quantifies all bacteria. Its number will not equal the total of the other other columns.\nThe metadata for the dataset includes:\n\nSubject: The individual\nVisit: The visit number corresponding to month (V1-V12).\n\nStarts from October and ends the following September\nThis serves as longitudinal data\n\nSample: The sample site: Axilla, Cheek, or Scalp\nBatch: The Batch number\n\n\n\n\n\nNotebook setup: Setup of the quantitative directory and the first jupyter notebook\nData: Reading in data and formatting it for MaAsLin3\nQuantitative analysis: Running and interpretation of maaslin3() with the quantitative and longitudinal data",
     "crumbs": [
-      "Overview",
-      "CGR MaAsLin3 for Unilever"
+      "Quantitative"
     ]
   },
   {
-    "objectID": "index.html#background",
-    "href": "index.html#background",
-    "title": "CGR MaAsLin3 for Unilever",
+    "objectID": "quantitative/quantitative.html#dataset",
+    "href": "quantitative/quantitative.html#dataset",
+    "title": "Quantitative",
     "section": "",
-    "text": "Info on MaAsLin3 and Mixed effect liner models",
+    "text": "Our dataset was produced with Precision Microbiome Profiling which produces quantitative abundance counts for a set of microbial species. Our data contains counts for 52 species and a column for 16s rRNA.\nThe 16s rRNA column is an assay of its own that quantifies all bacteria. Its number will not equal the total of the other other columns.\nThe metadata for the dataset includes:\n\nSubject: The individual\nVisit: The visit number corresponding to month (V1-V12).\n\nStarts from October and ends the following September\nThis serves as longitudinal data\n\nSample: The sample site: Axilla, Cheek, or Scalp\nBatch: The Batch number",
     "crumbs": [
-      "Overview",
-      "CGR MaAsLin3 for Unilever"
+      "Quantitative"
     ]
   },
   {
-    "objectID": "index.html#setup",
-    "href": "index.html#setup",
-    "title": "CGR MaAsLin3 for Unilever",
+    "objectID": "quantitative/quantitative.html#parts",
+    "href": "quantitative/quantitative.html#parts",
+    "title": "Quantitative",
     "section": "",
-    "text": "Setting up your environment in the workshop with (data directories & mamba) Jupyter notebook tutorial",
+    "text": "Notebook setup: Setup of the quantitative directory and the first jupyter notebook\nData: Reading in data and formatting it for MaAsLin3\nQuantitative analysis: Running and interpretation of maaslin3() with the quantitative and longitudinal data",
     "crumbs": [
-      "Overview",
-      "CGR MaAsLin3 for Unilever"
+      "Quantitative"
     ]
   },
   {
-    "objectID": "index.html#relative-abundance-analysis",
-    "href": "index.html#relative-abundance-analysis",
-    "title": "CGR MaAsLin3 for Unilever",
+    "objectID": "quantitative/summary_plot.html",
+    "href": "quantitative/summary_plot.html",
+    "title": "Summary plot",
     "section": "",
-    "text": "A standard MaAsLin3 analysis with an relative/count table based on genomic reads.",
+    "text": "With any MaAsLin3 analysis the best output to view first is the summary plot.\n\n\nYou can view your summary plot in the jupyter file explorer or you can view it below on this page.\n\n\n\n\nThere is a lot of useful information but annoyingly the Visits are not in chronilogical order. This is not ideal for our time points. Let’s fix that.\n\n\n\n\n\n\nWe can use the function maaslin3::maaslin_plot_results_from_output() to recreate our plots. Importantly we can use the parameters coef_plot_vars= and heatmap_vars= to set which variables will be included in the heatmap and coefficient plot. Additionally, it sets the order of the variables too.\nThe easiest option is to create vectors of the variable names. Some important notes:\n\nThe variables names need to be exactly as they are shown in the summary plot\n\nFor example the first variable in the plot above is “Sample Scalp” i.e. The metadata name, a space, and then the value\n\nYou can add variables to the heatmap that only show in the coefficient plot to the heatmap and vice versa\n\nIn the below code we’ll add “Visit V12” to the coefficient plot as an example\n\nIf you exclude a variable it will not show in the subsequent plot\nIf you include a variable that does not exist the replot function will ignore the variables you provide\n\nFor example, if you try to include “Visit V1” it will not work as it is the reference value\n\n\nSet the order of variables for replotting.\n\n#Set order of Coefficient plot variables\ncoef_plot_variables &lt;- c(\"Sample Cheek\", \"Sample Scalp\")\n#Set order of heatmap variables for plot recreation\n#Do not include V1 since it is the reference\nheatmap_variables &lt;-\n    c(\"Visit V2\",\"Visit V3\",\"Visit V4\",\"Visit V5\",\"Visit V6\",\n     \"Visit V7\",\"Visit V8\",\"Visit V9\",\"Visit V10\",\"Visit V11\",\"Visit V12\")\n\nReplot with the coefficient and heatmap variables.\nNote: You can include the parameters coef_plot_vars and heatmap_vars in the maaslin3() function. However, it is normally best to see the first summary plot maaslin3() creates and then replot with the parameters so you can see what you want to change.\n\n#MaAsLin3 replot\nmaaslin3::maaslin_plot_results_from_output(\n    output = 'PMP_output',\n    metadata = metadata,\n    normalization = 'NONE',\n    transform = 'LOG',\n    max_significance = 0.1,\n    median_comparison_abundance = FALSE,\n    median_comparison_prevalence = FALSE,\n    #Coefficient and heatmap variables\n    coef_plot_vars = coef_plot_variables,\n    heatmap_vars = heatmap_variables,\n    max_pngs = 500\n)\n\nYou’ll then get the below summary plot.\n\n\n\n\nIn these features we can see there is not a great deal of significant associations for the visit comparisons. However, the comparisons with the most associations are Cheek and Scalp. Therefore, it is possible that there’s more interesting results for visit that we’ll need to find with the significant results table and individual figures. Let’s investigate with some tasks and MCQs after looking at the significant results table.",
     "crumbs": [
-      "Overview",
-      "CGR MaAsLin3 for Unilever"
+      "Quantitative",
+      "Quantitative analysis",
+      "Summary plot"
     ]
   },
   {
-    "objectID": "index.html#quantitative-abundance-analysis",
-    "href": "index.html#quantitative-abundance-analysis",
-    "title": "CGR MaAsLin3 for Unilever",
+    "objectID": "quantitative/summary_plot.html#original-summary-plot",
+    "href": "quantitative/summary_plot.html#original-summary-plot",
+    "title": "Summary plot",
     "section": "",
-    "text": "MaAsLin3 analysis with quantitative abundances. Also involves analysis of longitudinal data.",
+    "text": "You can view your summary plot in the jupyter file explorer or you can view it below on this page.\n\n\n\n\nThere is a lot of useful information but annoyingly the Visits are not in chronilogical order. This is not ideal for our time points. Let’s fix that.",
     "crumbs": [
-      "Overview",
-      "CGR MaAsLin3 for Unilever"
+      "Quantitative",
+      "Quantitative analysis",
+      "Summary plot"
+    ]
+  },
+  {
+    "objectID": "quantitative/summary_plot.html#replot",
+    "href": "quantitative/summary_plot.html#replot",
+    "title": "Summary plot",
+    "section": "",
+    "text": "We can use the function maaslin3::maaslin_plot_results_from_output() to recreate our plots. Importantly we can use the parameters coef_plot_vars= and heatmap_vars= to set which variables will be included in the heatmap and coefficient plot. Additionally, it sets the order of the variables too.\nThe easiest option is to create vectors of the variable names. Some important notes:\n\nThe variables names need to be exactly as they are shown in the summary plot\n\nFor example the first variable in the plot above is “Sample Scalp” i.e. The metadata name, a space, and then the value\n\nYou can add variables to the heatmap that only show in the coefficient plot to the heatmap and vice versa\n\nIn the below code we’ll add “Visit V12” to the coefficient plot as an example\n\nIf you exclude a variable it will not show in the subsequent plot\nIf you include a variable that does not exist the replot function will ignore the variables you provide\n\nFor example, if you try to include “Visit V1” it will not work as it is the reference value\n\n\nSet the order of variables for replotting.\n\n#Set order of Coefficient plot variables\ncoef_plot_variables &lt;- c(\"Sample Cheek\", \"Sample Scalp\")\n#Set order of heatmap variables for plot recreation\n#Do not include V1 since it is the reference\nheatmap_variables &lt;-\n    c(\"Visit V2\",\"Visit V3\",\"Visit V4\",\"Visit V5\",\"Visit V6\",\n     \"Visit V7\",\"Visit V8\",\"Visit V9\",\"Visit V10\",\"Visit V11\",\"Visit V12\")\n\nReplot with the coefficient and heatmap variables.\nNote: You can include the parameters coef_plot_vars and heatmap_vars in the maaslin3() function. However, it is normally best to see the first summary plot maaslin3() creates and then replot with the parameters so you can see what you want to change.\n\n#MaAsLin3 replot\nmaaslin3::maaslin_plot_results_from_output(\n    output = 'PMP_output',\n    metadata = metadata,\n    normalization = 'NONE',\n    transform = 'LOG',\n    max_significance = 0.1,\n    median_comparison_abundance = FALSE,\n    median_comparison_prevalence = FALSE,\n    #Coefficient and heatmap variables\n    coef_plot_vars = coef_plot_variables,\n    heatmap_vars = heatmap_variables,\n    max_pngs = 500\n)\n\nYou’ll then get the below summary plot.\n\n\n\n\nIn these features we can see there is not a great deal of significant associations for the visit comparisons. However, the comparisons with the most associations are Cheek and Scalp. Therefore, it is possible that there’s more interesting results for visit that we’ll need to find with the significant results table and individual figures. Let’s investigate with some tasks and MCQs after looking at the significant results table.",
+    "crumbs": [
+      "Quantitative",
+      "Quantitative analysis",
+      "Summary plot"
     ]
   },
   {
@@ -1208,7 +1518,7 @@
     "href": "relative/median_comparison.html",
     "title": "Median comparisons",
     "section": "",
-    "text": "MaAsLin3 analysis compares the coefficient of each feature against either 0 or the median coefficient value. The median coefficient value being the calculated from all the coefficient values of all the features for the one specific comparison (e.g. Axilla vs cheek).\nMedian comparison can be set in maaslin3() with the following 2 options:\n\nmedian_comparison_abundance: Median comparison for abundance/linear comparisons\n\nBy default is set to TRUE\n\nmedian_comparison_prevalence: Median comparison for prevalence/logistic comparisons\n\nBy default is set to FALSE\n\n\n\n\n\n\n\nMedian comparison is primarily used for abundance testing. It accounts for compositionality and allows you to infer absolute scale changes when using relative abundance data (i.e. anything without absolute abundance values).\n\n\nBy default median_comparison_abundance is set to `TRUE. It should be used when using relative abundance values so you can make absolute scale inferences. The primary reason for this is that testing against zero on the relative scale is not the same as testing against zero on the absolute scale.\nWhen using abundance median comparison:\n\nA median coefficient for the comparison/metadatum (e.g. Axilla vs cheek) is created\nThe abundance coefficient for each feature is tested against the median value\nCompositionality is accounted for\nOnly p-values and q-values change\nCoefficients in the results are the relative abundance coefficients unless subtract_median = TRUE is set\n\n\n\n\nWhen median_comparison_abundance is FALSE the coefficients are compared against 0. This should be used when testing for:\n\nSignificant relative abundance associations when using relative abundance data\nAbsolute abundance associations under the assumption that the total absolute abundance is not changing\nSignificant absolute abundance association when supplying spike-in with unscaled_abundance\nSignificant absolute abundance association when supplying total abundance with unscaled_abundance\n\n\n\n\n\n\n\n\nBy default and for the vast majority of cases prevalence testing should be compared to 0 (median_comparison_prevalence=FALSE).\nMedian testing can be carried out when you are interested in determining if a specific prevalence association is significantly different to the median prevalence coefficient. This won’t be very often but it is an option.\n\n\n\nWhen using either abundance or prevalence median comparison a threshold is set for each. If the feature’s coefficient is within threshold of the median its p-value will be set to 1.\nFor example:\n\nThe median is 0.1\nThe median threshold is 0.05\nFeatures with coefficient values from 0.05-0.15 will automatically have a p-value of 1\n\nThis prevents features which may have a statistical difference but not a substantially different value compared to the median from being detected as significant.\nBy default both median_comparison_abundance_threshold and median_comparison_prevalence_threshold are set to 0. Therefore, only features whose coefficient match the coefficient will automatically be given a p-value of 1.\n\n\n\n\n\n\nOur analysis is using a standard relative abundance dataset. Therefore we used the default parameters of median_comparison_abundance=TRUE and median_comparison_prevalence=FALSE.\nMore information and considerations can be found in the MaAsLin3 manual.",
+    "text": "MaAsLin3 analysis compares the coefficient of each feature against either 0 or the median coefficient value. The median coefficient value being the calculated from all the coefficient values of all the features for the one specific comparison (e.g. Axilla vs cheek).\nMedian comparison can be set in maaslin3() with the following 2 options:\n\nmedian_comparison_abundance: Median comparison for abundance/linear comparisons\n\nBy default is set to TRUE\n\nmedian_comparison_prevalence: Median comparison for prevalence/logistic comparisons\n\nBy default is set to FALSE\n\n\n\n\n\n\n\nMedian comparison is primarily used for abundance testing. It accounts for compositionality and allows you to infer absolute scale changes when using relative abundance data (i.e. anything without absolute abundance values).\n\n\nBy default median_comparison_abundance is set to TRUE. It should be used when using relative abundance values so you can make absolute scale inferences. The primary reason for this is that testing against zero on the relative scale is not the same as testing against zero on the absolute scale.\nWhen using abundance median comparison:\n\nA median coefficient for the comparison/metadatum (e.g. Axilla vs cheek) is created\nThe abundance coefficient for each feature is tested against the median value\nCompositionality is accounted for\nOnly p-values and q-values change\nCoefficients in the results are the relative abundance coefficients unless subtract_median = TRUE is set\n\n\n\n\nWhen median_comparison_abundance is FALSE the coefficients are compared against 0. This should be used when testing for:\n\nSignificant relative abundance associations when using relative abundance data\nAbsolute abundance associations under the assumption that the total absolute abundance is not changing\nSignificant absolute abundance association when supplying spike-in with unscaled_abundance\nSignificant absolute abundance association when supplying total abundance with unscaled_abundance\n\n\n\n\n\n\n\n\nBy default and for the vast majority of cases prevalence testing should be compared to 0 (median_comparison_prevalence=FALSE).\nMedian testing can be carried out when you are interested in determining if a specific prevalence association is significantly different to the median prevalence coefficient. This won’t be very often but it is an option.\n\n\n\nWhen using either abundance or prevalence median comparison a threshold is set for each. If the feature’s coefficient is within threshold of the median its p-value will be set to 1.\nFor example:\n\nThe median is 0.1\nThe median threshold is 0.05\nFeatures with coefficient values from 0.05-0.15 will automatically have a p-value of 1\n\nThis prevents features which may have a statistical difference but not a substantially different value compared to the median from being detected as significant.\nBy default both median_comparison_abundance_threshold and median_comparison_prevalence_threshold are set to 0. Therefore, only features whose coefficient match the coefficient will automatically be given a p-value of 1.\n\n\n\n\n\n\nOur analysis is using a standard relative abundance dataset. Therefore we used the default parameters of median_comparison_abundance=TRUE and median_comparison_prevalence=FALSE.\nMore information and considerations can be found in the MaAsLin3 manual.",
     "crumbs": [
       "Relative",
       "MaAsLin3",
@@ -1220,7 +1530,7 @@
     "href": "relative/median_comparison.html#abundance-testing",
     "title": "Median comparisons",
     "section": "",
-    "text": "Median comparison is primarily used for abundance testing. It accounts for compositionality and allows you to infer absolute scale changes when using relative abundance data (i.e. anything without absolute abundance values).\n\n\nBy default median_comparison_abundance is set to `TRUE. It should be used when using relative abundance values so you can make absolute scale inferences. The primary reason for this is that testing against zero on the relative scale is not the same as testing against zero on the absolute scale.\nWhen using abundance median comparison:\n\nA median coefficient for the comparison/metadatum (e.g. Axilla vs cheek) is created\nThe abundance coefficient for each feature is tested against the median value\nCompositionality is accounted for\nOnly p-values and q-values change\nCoefficients in the results are the relative abundance coefficients unless subtract_median = TRUE is set\n\n\n\n\nWhen median_comparison_abundance is FALSE the coefficients are compared against 0. This should be used when testing for:\n\nSignificant relative abundance associations when using relative abundance data\nAbsolute abundance associations under the assumption that the total absolute abundance is not changing\nSignificant absolute abundance association when supplying spike-in with unscaled_abundance\nSignificant absolute abundance association when supplying total abundance with unscaled_abundance",
+    "text": "Median comparison is primarily used for abundance testing. It accounts for compositionality and allows you to infer absolute scale changes when using relative abundance data (i.e. anything without absolute abundance values).\n\n\nBy default median_comparison_abundance is set to TRUE. It should be used when using relative abundance values so you can make absolute scale inferences. The primary reason for this is that testing against zero on the relative scale is not the same as testing against zero on the absolute scale.\nWhen using abundance median comparison:\n\nA median coefficient for the comparison/metadatum (e.g. Axilla vs cheek) is created\nThe abundance coefficient for each feature is tested against the median value\nCompositionality is accounted for\nOnly p-values and q-values change\nCoefficients in the results are the relative abundance coefficients unless subtract_median = TRUE is set\n\n\n\n\nWhen median_comparison_abundance is FALSE the coefficients are compared against 0. This should be used when testing for:\n\nSignificant relative abundance associations when using relative abundance data\nAbsolute abundance associations under the assumption that the total absolute abundance is not changing\nSignificant absolute abundance association when supplying spike-in with unscaled_abundance\nSignificant absolute abundance association when supplying total abundance with unscaled_abundance",
     "crumbs": [
       "Relative",
       "MaAsLin3",
