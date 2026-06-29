@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -75,14 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-23ce6577f6cda163810da435728738e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-6175eee5f7d65124045671371f4ab2ed.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-23ce6577f6cda163810da435728738e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c534a626e2d96700e75a432a0e9991e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-0a9e1fffec30c83bdb34004a38d2ef46.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-2c534a626e2d96700e75a432a0e9991e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -637,7 +637,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="categorical-linear-boxplots" class="level1">
 <h1>Categorical linear boxplots</h1>
 <center>
-<img src="../images/boxplot_vert.png" class="img-fluid" style="width:200px; background:white; border-radius:5px; border: white solid 5px">
+<img src="..\images/boxplot_vert.png" class="img-fluid" style="width:200px; background:white; border-radius:5px; border: white solid 5px">
 </center>
 <p>Boxplots are used to visualise relative/linear modelling associations with categorical fixed effects. To learn about these we will look at Sample site association to interpret the metrics and plots. As a reminder the Sample site comparisons were:</p>
 <ul>
@@ -653,7 +653,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="significant-results-table" class="level2">
 <h2 class="anchored" data-anchor-id="significant-results-table">Significant results table</h2>
 <center>
-<img src="../images/table.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
+<img src="..\images/table.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
 </center>
 <p>To start we’ll create a significant result tibble only containing <code>SampleSite</code> associations with the abundance model.</p>
 <div class="cell">
@@ -686,7 +686,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="coefficient" class="level2">
 <h2 class="anchored" data-anchor-id="coefficient">Coefficient</h2>
 <center>
-<img src="../images/coef.png" class="img-fluid" style="width:250px; background:white; border-radius:5px; border: white solid 5px">
+<img src="..\images/coef.png" class="img-fluid" style="width:250px; background:white; border-radius:5px; border: white solid 5px">
 </center>
 <p>The coefficient value of abundance modelling with categorical data represents the fold change in relative abundance from the reference group to the query group. MaAsLin manual’s description is: “a one-unit change in the metadatum variable corresponds to a 2<sup>coef</sup> fold change in the relative abundance of the feature.”</p>
 <p>In our data the coefficient of JANJXX01 sp. hMGS.05290 for Scalp is 5.639159. This indicates the relative abundance of the feature is &gt;32 times larger in scalp (query) samples compared to axilla (reference) samples.</p>
@@ -742,7 +742,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="box-plot" class="level2">
 <h2 class="anchored" data-anchor-id="box-plot">Box plot</h2>
 <center>
-<img src="../images/boxplot_vert.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
+<img src="..\images/boxplot_vert.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
 </center>
 <p>With an understanding of the coefficient value we’ll now look at the boxplot for the <code>SampleSite</code> association of JANJXX01 sp. hMGS.05290.</p>
 <p>You can open it in the jupyter file explorer. Its path is <code>./metagenome_output/figures/association_plots/SampleSite/linear/SampleSite_JANJXX01.sp..hMGS.05290_linear.png</code>. The breakdown of this path is:</p>
@@ -837,13 +837,13 @@ Note
 </tr>
 </tbody>
 </table>
-<p>With this plot we can clearly see that the relative abundance of the scalp samples is much higher than for Axilla. The median value for Scalp is around -5 (relative abundance = ~0.005) whereas its around -12 (relative abundance = ~ 0.00001) for Axilla.</p>
+<p>With this plot we can clearly see that the relative abundance of the Scalp samples is much higher than for Axilla. The median value for Scalp is around -5 (relative abundance = ~0.005) whereas its around -12 (relative abundance = ~ 0.00001) for Axilla.</p>
 <p>It also looks like Cheek vs Axilla might be a significant associations. Open your <code>significant_results.html</code> and search for “JANJXX01”. You’ll see that the association for Cheek is present with a coefficient of 4.05 and a q-value of 2.34e-7.</p>
 </section>
 <section id="tasks-and-mcqs" class="level2">
 <h2 class="anchored" data-anchor-id="tasks-and-mcqs">Tasks and MCQs</h2>
 <center>
-<img src="../images/question_bubble_ibm_blue.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
+<img src="..\images/question_bubble_ibm_blue.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
 </center>
 <p>Please attempt the following tasks and MCQs:</p>
 <section id="task-1" class="level3">
@@ -851,20 +851,20 @@ Note
 <p>View the metrics of the top five significant SampleSite associations with negative coefficient values. I.e. filter out associations with positive values and then look at the five associations with the lowest q values</p>
 <ol type="1">
 <li>Which feature association has the highest significance (i.e lowest q-value)?
-<div id="radio_ANXJWRLNNU" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ANXJWRLNNU" value="answer"> <span><em>Staphylococcus epidermidis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_ANXJWRLNNU" value=""> <span><em>Staphylococcus lugdunensis</em>-SampleSiteCheek</span></label><label><input type="radio" autocomplete="off" name="radio_ANXJWRLNNU" value=""> <span><em>Staphylococcus lugdunensis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_ANXJWRLNNU" value=""> <span><em>Staphylococcus hominis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_ANXJWRLNNU" value=""> <span><em>Cutibacterium avidum</em>-SampleSite Cheek</span></label>
+<div id="radio_OHGKKVXALN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_OHGKKVXALN" value="answer"> <span><em>Staphylococcus epidermidis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_OHGKKVXALN" value=""> <span><em>Staphylococcus lugdunensis</em>-SampleSiteCheek</span></label><label><input type="radio" autocomplete="off" name="radio_OHGKKVXALN" value=""> <span><em>Staphylococcus lugdunensis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_OHGKKVXALN" value=""> <span><em>Staphylococcus hominis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_OHGKKVXALN" value=""> <span><em>Cutibacterium avidum</em>-SampleSite Cheek</span></label>
 </div></li>
 </ol>
 <ol start="2" type="1">
 <li>Which feature association has the greatest coefficient value (i.e.&nbsp;the value furtherest from 0 representing the largest fold change difference comparing the query to the reference)?
-<div id="radio_WETOXNVICL" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WETOXNVICL" value=""> <span><em>Staphylococcus epidermidis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_WETOXNVICL" value=""> <span><em>Staphylococcus lugdunensis</em>-SampleSiteCheek</span></label><label><input type="radio" autocomplete="off" name="radio_WETOXNVICL" value="answer"> <span><em>Staphylococcus lugdunensis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_WETOXNVICL" value=""> <span><em>Staphylococcus hominis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_WETOXNVICL" value=""> <span><em>Cutibacterium avidum</em>-SampleSite Cheek</span></label>
+<div id="radio_BQXNQOUAUB" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BQXNQOUAUB" value=""> <span><em>Staphylococcus epidermidis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_BQXNQOUAUB" value=""> <span><em>Staphylococcus lugdunensis</em>-SampleSiteCheek</span></label><label><input type="radio" autocomplete="off" name="radio_BQXNQOUAUB" value="answer"> <span><em>Staphylococcus lugdunensis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_BQXNQOUAUB" value=""> <span><em>Staphylococcus hominis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_BQXNQOUAUB" value=""> <span><em>Cutibacterium avidum</em>-SampleSite Cheek</span></label>
 </div></li>
 </ol>
 <ol start="3" type="1">
 <li>Which feature association has the highest prevalence (i.e.&nbsp;the largest <code>N_not_zero</code> value)?
-<div id="radio_TGQTLERGNM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TGQTLERGNM" value="answer"> <span><em>Staphylococcus epidermidis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_TGQTLERGNM" value=""> <span><em>Staphylococcus lugdunensis</em>-SampleSiteCheek</span></label><label><input type="radio" autocomplete="off" name="radio_TGQTLERGNM" value=""> <span><em>Staphylococcus lugdunensis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_TGQTLERGNM" value=""> <span><em>Staphylococcus hominis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_TGQTLERGNM" value=""> <span><em>Cutibacterium avidum</em>-SampleSite Cheek</span></label>
+<div id="radio_XGGWIXKEWQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XGGWIXKEWQ" value="answer"> <span><em>Staphylococcus epidermidis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_XGGWIXKEWQ" value=""> <span><em>Staphylococcus lugdunensis</em>-SampleSiteCheek</span></label><label><input type="radio" autocomplete="off" name="radio_XGGWIXKEWQ" value=""> <span><em>Staphylococcus lugdunensis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_XGGWIXKEWQ" value=""> <span><em>Staphylococcus hominis</em>-SampleSiteScalp</span></label><label><input type="radio" autocomplete="off" name="radio_XGGWIXKEWQ" value=""> <span><em>Cutibacterium avidum</em>-SampleSite Cheek</span></label>
 </div></li>
 </ol>
 <div class="webex-solution">
@@ -885,20 +885,20 @@ Code solution
 <p>Using the relevant plots answer the below MCQs:</p>
 <ol type="1">
 <li>Approximately, what is the median log relative abundance of <em>Staphylococcus epidermidis</em> for the Axilla samples?
-<div id="radio_PVQGIELSEP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_PVQGIELSEP" value="answer"> <span><strong>-2.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_PVQGIELSEP" value=""> <span><strong>-12.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_PVQGIELSEP" value=""> <span><strong>-15.0</strong></span></label>
+<div id="radio_XWZFXSZCSC" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XWZFXSZCSC" value="answer"> <span><strong>-2.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XWZFXSZCSC" value=""> <span><strong>-12.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XWZFXSZCSC" value=""> <span><strong>-15.0</strong></span></label>
 </div></li>
 </ol>
 <ol start="2" type="1">
 <li>Approximately, what is the median log relative abundance of <em>Staphylococcus hominis</em> for the Scalp samples?
-<div id="radio_KOCVGPZCFO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KOCVGPZCFO" value=""> <span><strong>-2.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KOCVGPZCFO" value="answer"> <span><strong>-12.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KOCVGPZCFO" value=""> <span><strong>-15.0</strong></span></label>
+<div id="radio_YXGQWBUAKZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_YXGQWBUAKZ" value=""> <span><strong>-2.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_YXGQWBUAKZ" value="answer"> <span><strong>-12.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_YXGQWBUAKZ" value=""> <span><strong>-15.0</strong></span></label>
 </div></li>
 </ol>
 <ol start="3" type="1">
 <li>Approximately, what is the median log relative abundance of <em>Staphylococcus lugdunensis</em> for the Scalp samples?
-<div id="radio_CESCIBGPPI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CESCIBGPPI" value=""> <span><strong>-2.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CESCIBGPPI" value=""> <span><strong>-12.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CESCIBGPPI" value="answer"> <span><strong>-15.0</strong></span></label>
+<div id="radio_QECOPYGZGK" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_QECOPYGZGK" value=""> <span><strong>-2.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_QECOPYGZGK" value=""> <span><strong>-12.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_QECOPYGZGK" value="answer"> <span><strong>-15.0</strong></span></label>
 </div></li>
 </ol>
 </section>
@@ -906,7 +906,7 @@ Code solution
 <section id="the-power-of-n" class="level2">
 <h2 class="anchored" data-anchor-id="the-power-of-n">The power of n=</h2>
 <center>
-<img src="../images/sample_size.png" class="img-fluid" style="width:200px; background:white; border-radius:5px">
+<img src="..\images/sample_size.png" class="img-fluid" style="width:200px; background:white; border-radius:5px">
 </center>
 <p>Abundance association tests only use samples where the feature is present. This means associations where the feature is more prevalent will have greater power.</p>
 <p>This can be seen with our <em>Staphylococcus lugdunensis</em> associations. The fold change is greater for the Scalp against Axilla association (-8.56) compared to the Cheek against Axilla association (-5.14). However, the q-value of the Cheek association is more significant (6e-11 compared to 1.6-e09). This is because there are 26 Cheek samples with <em>S.lugdunensis</em> present compared to only 11 for the Scalp samples.</p>
@@ -1554,7 +1554,7 @@ window.onload = function() {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><a href="https://www.liverpool.ac.uk/genomic-research/"><img src="../images/CGR_large.png" alt="CGR" height="60"></a></p>
+<p><a href="https://www.liverpool.ac.uk/genomic-research/"><img src="..\images/CGR_large.png" alt="CGR" height="60"></a></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

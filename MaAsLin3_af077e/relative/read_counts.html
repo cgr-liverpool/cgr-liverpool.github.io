@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -75,14 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-23ce6577f6cda163810da435728738e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-6175eee5f7d65124045671371f4ab2ed.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-23ce6577f6cda163810da435728738e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c534a626e2d96700e75a432a0e9991e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-0a9e1fffec30c83bdb34004a38d2ef46.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-2c534a626e2d96700e75a432a0e9991e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -633,13 +633,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="read-counts" class="level1">
 <h1>Read counts</h1>
 <center>
-<img src="../images/depth.png" class="img-fluid" style="width:200px; background:white; border-radius:5px">
+<img src="..\images/depth.png" class="img-fluid" style="width:200px; background:white; border-radius:5px">
 </center>
 <p><code>MaAsLin3</code> can test whether metadata variables are associated with feature presence/absence. This is called a prevalence test Prevalence of organisms can be greatly affected by the read depth of the different samples. When using abundance values (not quantitative abundance values) the read numbers/depth for each sample should be included as a continuous fixed effect.</p>
 <section id="import-read-depth-data" class="level2">
 <h2 class="anchored" data-anchor-id="import-read-depth-data">Import read depth data</h2>
 <center>
-<img src="../images/import.png" class="img-fluid" style="width:150px; background:white; border-radius:5px">
+<img src="..\images/import.png" class="img-fluid" style="width:150px; background:white; border-radius:5px">
 </center>
 <p>We have the read counts/depth in two separate files for this dataset. Read these in and check their contents.</p>
 <div class="cell">
@@ -655,7 +655,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="letter-notation-for-read-counts" class="level2">
 <h2 class="anchored" data-anchor-id="letter-notation-for-read-counts">Letter notation for read counts</h2>
 <center>
-<img src="../images/number_letters.png" class="img-fluid" style="width:250px; background:white; border-radius:5px; border: white solid 5px">
+<img src="..\images/number_letters.png" class="img-fluid" style="width:250px; background:white; border-radius:5px; border: white solid 5px">
 </center>
 <p>Let’s check if there are any other letters used. We’ll use the <a href="https://cgr-liverpool.github.io/Tidyverse/stringr/str_sub.html"><code>stringr::sub_str()</code> function</a> in the code.</p>
 <div class="cell">
@@ -679,7 +679,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="number-binding-and-formatting" class="level2">
 <h2 class="anchored" data-anchor-id="number-binding-and-formatting">Number binding and formatting</h2>
 <center>
-<img src="../images/scientific_calculator.png" class="img-fluid" style="width:150px; background:white; border-radius:5px">
+<img src="..\images/scientific_calculator.png" class="img-fluid" style="width:150px; background:white; border-radius:5px">
 </center>
 <p>In the next code block we’ll bind these two <code>data.frames</code>, and select the <code>Names</code> and <code>Reads</code> columns. Then we’ll need to change the <code>Reads</code> column to be proper numeric values. We’ll carry this out with the following steps:</p>
 <ol type="1">
@@ -716,7 +716,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="bind-with-metadata" class="level2">
 <h2 class="anchored" data-anchor-id="bind-with-metadata">Bind with metadata</h2>
 <center>
-<img src="../images/stapler.png" class="img-fluid" style="width:150px; background:white; border-radius:5px">
+<img src="..\images/stapler.png" class="img-fluid" style="width:150px; background:white; border-radius:5px">
 </center>
 <p>Our final step is to bind the read counts to the metadata table correctly.</p>
 <p>First, let’s extract the sample names from the metadata table.</p>
@@ -748,7 +748,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="save-r-objects" class="level2">
 <h2 class="anchored" data-anchor-id="save-r-objects">Save R objects</h2>
 <center>
-<img src="../images/save.png" class="img-fluid" style="width:150px; background:white; border-radius:5px">
+<img src="..\images/save.png" class="img-fluid" style="width:150px; background:white; border-radius:5px">
 </center>
 <p>We’ll open a new jupyter notebook in the next part. Save your <code>taxa_table</code> and <code>metadata</code> objects as files so you can load them into the next notebook.</p>
 <div class="cell">
@@ -1401,7 +1401,7 @@ window.onload = function() {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><a href="https://www.liverpool.ac.uk/genomic-research/"><img src="../images/CGR_large.png" alt="CGR" height="60"></a></p>
+<p><a href="https://www.liverpool.ac.uk/genomic-research/"><img src="..\images/CGR_large.png" alt="CGR" height="60"></a></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
