@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -75,14 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-23ce6577f6cda163810da435728738e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-6175eee5f7d65124045671371f4ab2ed.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-23ce6577f6cda163810da435728738e4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2c534a626e2d96700e75a432a0e9991e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-0a9e1fffec30c83bdb34004a38d2ef46.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-2c534a626e2d96700e75a432a0e9991e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -487,11 +487,13 @@ Create tibble solution
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Save significant results table</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sig_res_tbl <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_delim</span>(</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">"./PMP_output/significant_results.tsv"</span>, </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">delim=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">r unhide()</span><span class="st">`</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">r hide("Save R object as file solution")</span><span class="st">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">delim=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
+<div class="webex-solution">
+<button>
+Save R object as file solution
+</button>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Save significant results table</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(sig_res_tbl, <span class="at">file=</span><span class="st">"./PMP_output/significant_results.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -519,8 +521,8 @@ HTML table solution
 <p>Using the HTML table you created and/or using code to interrogate <code>sig_res_tbl</code> answer the below MCQs.</p>
 <ol type="1">
 <li>Which feature has the largest positive coefficient value?
-<div id="radio_YEYPGGPSBF" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YEYPGGPSBF" value="answer"> <span><em>Cutibacterium.namnetense</em></span></label><label><input type="radio" autocomplete="off" name="radio_YEYPGGPSBF" value=""> <span><em>Malassezia</em></span></label><label><input type="radio" autocomplete="off" name="radio_YEYPGGPSBF" value=""> <span><em>Staphylococcus.aureus</em></span></label>
+<div id="radio_PJLUJITTLZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PJLUJITTLZ" value="answer"> <span><em>Cutibacterium.namnetense</em></span></label><label><input type="radio" autocomplete="off" name="radio_PJLUJITTLZ" value=""> <span><em>Malassezia</em></span></label><label><input type="radio" autocomplete="off" name="radio_PJLUJITTLZ" value=""> <span><em>Staphylococcus.aureus</em></span></label>
 </div></li>
 </ol>
 <div class="webex-solution">
@@ -536,8 +538,8 @@ MCQ1 code solution
 </div>
 <ol start="2" type="1">
 <li>Which feature has the most negative coefficient value for the V12 associations?
-<div id="radio_OQWOGAHRXF" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_OQWOGAHRXF" value=""> <span><em>Cutibacterium.namnetense</em></span></label><label><input type="radio" autocomplete="off" name="radio_OQWOGAHRXF" value=""> <span><em>Malassezia</em></span></label><label><input type="radio" autocomplete="off" name="radio_OQWOGAHRXF" value="answer"> <span><em>Staphylococcus.aureus</em></span></label>
+<div id="radio_QTGHBGBJWK" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_QTGHBGBJWK" value=""> <span><em>Cutibacterium.namnetense</em></span></label><label><input type="radio" autocomplete="off" name="radio_QTGHBGBJWK" value=""> <span><em>Malassezia</em></span></label><label><input type="radio" autocomplete="off" name="radio_QTGHBGBJWK" value="answer"> <span><em>Staphylococcus.aureus</em></span></label>
 </div></li>
 </ol>
 <div class="webex-solution">
@@ -555,8 +557,8 @@ MCQ2 code solution
 </div>
 <ol start="3" type="1">
 <li>Which feature has the most significant individual q-value for the Cheek associations?
-<div id="radio_KEFHWDCQXQ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KEFHWDCQXQ" value=""> <span><em>Cutibacterium.namnetense</em></span></label><label><input type="radio" autocomplete="off" name="radio_KEFHWDCQXQ" value="answer"> <span><em>Malassezia</em></span></label><label><input type="radio" autocomplete="off" name="radio_KEFHWDCQXQ" value=""> <span><em>Staphylococcus.aureus</em></span></label>
+<div id="radio_ZYUSCKGKPX" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZYUSCKGKPX" value=""> <span><em>Cutibacterium.namnetense</em></span></label><label><input type="radio" autocomplete="off" name="radio_ZYUSCKGKPX" value="answer"> <span><em>Malassezia</em></span></label><label><input type="radio" autocomplete="off" name="radio_ZYUSCKGKPX" value=""> <span><em>Staphylococcus.aureus</em></span></label>
 </div></li>
 </ol>
 <div class="webex-solution">
@@ -575,8 +577,8 @@ MCQ3 code solution
 <p>The next three questions are designed to be answered with code. Please look at the <a href="https://cgr-liverpool.github.io/Tidyverse/dplyr/dplyr.html"><code>dplyr</code> page of the tidyverse materials</a>.</p>
 <ol start="4" type="1">
 <li>How many prevalence associations are there with an individual q-value less than 0.1?
-<div id="radio_EGDOVPYEGK" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_EGDOVPYEGK" value=""> <span><strong>10</strong></span></label><label><input type="radio" autocomplete="off" name="radio_EGDOVPYEGK" value=""> <span><strong>19</strong></span></label><label><input type="radio" autocomplete="off" name="radio_EGDOVPYEGK" value="answer"> <span><strong>90</strong></span></label>
+<div id="radio_GZUNVNPIQQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_GZUNVNPIQQ" value=""> <span><strong>10</strong></span></label><label><input type="radio" autocomplete="off" name="radio_GZUNVNPIQQ" value=""> <span><strong>19</strong></span></label><label><input type="radio" autocomplete="off" name="radio_GZUNVNPIQQ" value="answer"> <span><strong>90</strong></span></label>
 </div></li>
 </ol>
 <div class="webex-solution">
@@ -596,8 +598,8 @@ MCQ4 code solution
 </div>
 <ol start="5" type="1">
 <li>Count the number of abundance associations for each of the visit comparisons (V2, V3, V4, etc.). What is the largest number?
-<div id="radio_QZRTCQUHKF" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_QZRTCQUHKF" value="answer"> <span><strong>10</strong></span></label><label><input type="radio" autocomplete="off" name="radio_QZRTCQUHKF" value=""> <span><strong>19</strong></span></label><label><input type="radio" autocomplete="off" name="radio_QZRTCQUHKF" value=""> <span><strong>90</strong></span></label>
+<div id="radio_KDGGUUQWGH" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KDGGUUQWGH" value="answer"> <span><strong>10</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KDGGUUQWGH" value=""> <span><strong>19</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KDGGUUQWGH" value=""> <span><strong>90</strong></span></label>
 </div></li>
 </ol>
 <div class="webex-solution">
@@ -619,8 +621,8 @@ MCQ5 code solution
 </div>
 <ol start="6" type="1">
 <li>How many abundance associations of scalp (compared to axilla) have a <code>N_not_zero</code> greater than 50% of the total samples (<code>n</code>)?
-<div id="radio_SGZTWUFGHW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_SGZTWUFGHW" value=""> <span><strong>10</strong></span></label><label><input type="radio" autocomplete="off" name="radio_SGZTWUFGHW" value="answer"> <span><strong>19</strong></span></label><label><input type="radio" autocomplete="off" name="radio_SGZTWUFGHW" value=""> <span><strong>90</strong></span></label>
+<div id="radio_ZRIYYJSUBU" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZRIYYJSUBU" value=""> <span><strong>10</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ZRIYYJSUBU" value="answer"> <span><strong>19</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ZRIYYJSUBU" value=""> <span><strong>90</strong></span></label>
 </div></li>
 </ol>
 <p><strong>Tip:</strong> Using <a href="https://cgr-liverpool.github.io/Tidyverse/dplyr/mutate.html"><code>dplyr::mutate()</code></a> with the columns <code>n</code> and <code>N_not_zero</code> can be helpful.</p>
@@ -1287,7 +1289,7 @@ window.onload = function() {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p><a href="https://www.liverpool.ac.uk/genomic-research/"><img src="../images/CGR_large.png" alt="CGR" height="60"></a></p>
+<p><a href="https://www.liverpool.ac.uk/genomic-research/"><img src="..\images/CGR_large.png" alt="CGR" height="60"></a></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

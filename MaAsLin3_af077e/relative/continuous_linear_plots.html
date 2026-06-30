@@ -665,7 +665,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract the five rows with the smallest qval_individual values</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual, <span class="at">n=</span><span class="dv">5</span>) <span class="sc">|&gt;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">12</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You’ll see the top association is:</p>
 <p>feature: Pseudomonas_E lactis coefficient: -3.099056</p>
@@ -705,20 +705,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Please attempt the following questions based on the top 4 significant associations:</p>
 <ol type="1">
 <li>Which feature association has the largest positive coefficient?
-<div id="radio_WASYMXPTFR" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WASYMXPTFR" value=""> <span><em>Pseudomonas_E lactis</em></span></label><label><input type="radio" autocomplete="off" name="radio_WASYMXPTFR" value=""> <span><em>Lactococcus cremoris</em></span></label><label><input type="radio" autocomplete="off" name="radio_WASYMXPTFR" value="answer"> <span><em>Corynebacterium gottingense</em></span></label><label><input type="radio" autocomplete="off" name="radio_WASYMXPTFR" value=""> <span><em>Stutzerimonas stutzeri</em></span></label>
+<div id="radio_BNSXZFIXWG" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BNSXZFIXWG" value=""> <span><em>Pseudomonas_E lactis</em></span></label><label><input type="radio" autocomplete="off" name="radio_BNSXZFIXWG" value=""> <span><em>Lactococcus cremoris</em></span></label><label><input type="radio" autocomplete="off" name="radio_BNSXZFIXWG" value="answer"> <span><em>Corynebacterium gottingense</em></span></label><label><input type="radio" autocomplete="off" name="radio_BNSXZFIXWG" value=""> <span><em>Stutzerimonas stutzeri</em></span></label>
 </div></li>
 </ol>
 <ol start="2" type="1">
 <li>Which feature association has the largest <code>N_not_zero</code> value?
-<div id="radio_BQHQSZLFIT" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_BQHQSZLFIT" value=""> <span><em>Pseudomonas_E lactis</em></span></label><label><input type="radio" autocomplete="off" name="radio_BQHQSZLFIT" value=""> <span><em>Lactococcus cremoris</em></span></label><label><input type="radio" autocomplete="off" name="radio_BQHQSZLFIT" value=""> <span><em>Corynebacterium gottingense</em></span></label><label><input type="radio" autocomplete="off" name="radio_BQHQSZLFIT" value="answer"> <span><em>Stutzerimonas stutzeri</em></span></label>
+<div id="radio_LAZDVOYCEK" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_LAZDVOYCEK" value=""> <span><em>Pseudomonas_E lactis</em></span></label><label><input type="radio" autocomplete="off" name="radio_LAZDVOYCEK" value=""> <span><em>Lactococcus cremoris</em></span></label><label><input type="radio" autocomplete="off" name="radio_LAZDVOYCEK" value=""> <span><em>Corynebacterium gottingense</em></span></label><label><input type="radio" autocomplete="off" name="radio_LAZDVOYCEK" value="answer"> <span><em>Stutzerimonas stutzeri</em></span></label>
 </div></li>
 </ol>
 <ol start="3" type="1">
 <li>Which feature association has a joint q-value greater than 0.1?
-<div id="radio_RUQIVRHOYZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RUQIVRHOYZ" value=""> <span><em>Pseudomonas_E lactis</em></span></label><label><input type="radio" autocomplete="off" name="radio_RUQIVRHOYZ" value=""> <span><em>Lactococcus cremoris</em></span></label><label><input type="radio" autocomplete="off" name="radio_RUQIVRHOYZ" value=""> <span><em>Corynebacterium gottingense</em></span></label><label><input type="radio" autocomplete="off" name="radio_RUQIVRHOYZ" value="answer"> <span><em>Stutzerimonas stutzeri</em></span></label>
+<div id="radio_WKPXFAZHLD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_WKPXFAZHLD" value=""> <span><em>Pseudomonas_E lactis</em></span></label><label><input type="radio" autocomplete="off" name="radio_WKPXFAZHLD" value=""> <span><em>Lactococcus cremoris</em></span></label><label><input type="radio" autocomplete="off" name="radio_WKPXFAZHLD" value=""> <span><em>Corynebacterium gottingense</em></span></label><label><input type="radio" autocomplete="off" name="radio_WKPXFAZHLD" value="answer"> <span><em>Stutzerimonas stutzeri</em></span></label>
 </div></li>
 </ol>
 

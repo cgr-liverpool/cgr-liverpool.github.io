@@ -752,8 +752,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </center>
 <p>We’ll open a new jupyter notebook in the next part. Save your <code>taxa_table</code> and <code>metadata</code> objects as files so you can load them into the next notebook.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(taxa_table,<span class="st">"taxa_table.RData"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(metadata,<span class="st">"metadata.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(taxa_table,<span class="at">file=</span><span class="st">"taxa_table.RData"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(metadata,<span class="at">file=</span><span class="st">"metadata.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You can now save then close and halt the notebook.</p>
 <p>With our count table and we can move onto the MaAsLin3 analysis.</p>
