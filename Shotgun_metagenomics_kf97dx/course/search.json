@@ -1500,6 +1500,18 @@
     ]
   },
   {
+    "objectID": "read_approach/krona.html#kraken2-report-to-krona",
+    "href": "read_approach/krona.html#kraken2-report-to-krona",
+    "title": "Krona",
+    "section": "",
+    "text": "Prior to creating our html pie charts we need to convert our kraken2 reports to krona text files. We’ll carry this out with the KrakenTools script: kreport2krona.py.\n\n\n\n\n\n\nNote\n\n\n\nEnsure you type the full python script as it is below.  For information on how to download and use the python script in your own computer/environment please see the appendix\n\n\n\n#Krona conversion for K1\npython /pub14/tea/nsc206/git_installs/KrakenTools/kreport2krona.py -r K1.kreport2 -o K1.krona\n#Krona conversion for K2\npython /pub14/tea/nsc206/git_installs/KrakenTools/kreport2krona.py -r K2.kreport2 -o K2.krona\n#Krona conversion for W1\npython /pub14/tea/nsc206/git_installs/KrakenTools/kreport2krona.py -r W1.kreport2 -o W1.krona\n\n\n-r is our input report file\n-o is our output krona text file\n\n\n\nLoop method\n\nRather than running the command for each line you can carry it out with a loop. If you run the below first ensure your current directory only has .kreport2 files that you want included.\n\nls -1 *kreport2 | sed \"s/.kreport2//\" | while read sample\ndo \npython /pub14/tea/nsc206/git_installs/KrakenTools/kreport2krona.py \\\n-r ${sample}.kreport2 \\\n-o ${sample}.krona\ndone\n\n\nThe actual content of the krona text file is not of interest as the file is only really useful for creating the interactive krona charts.",
+    "crumbs": [
+      "Reads",
+      "Taxonomy of reads",
+      "Krona"
+    ]
+  },
+  {
     "objectID": "read_approach/krona.html#import-taxonomy",
     "href": "read_approach/krona.html#import-taxonomy",
     "title": "Krona",
@@ -1611,18 +1623,6 @@
     "crumbs": [
       "Setup",
       "Cluster Introduction"
-    ]
-  },
-  {
-    "objectID": "read_approach/krona.html#kraken2-report-to-krona",
-    "href": "read_approach/krona.html#kraken2-report-to-krona",
-    "title": "Krona",
-    "section": "",
-    "text": "Prior to creating our html pie charts we need to convert our kraken2 reports to krona text files. We’ll carry this out with the KrakenTools script: kreport2krona.py.\n\n\n\n\n\n\nNote\n\n\n\nEnsure you type the full python script as it is below.  For information on how to download and use the python script in your own computer/environment please see the appendix\n\n\n\n#Krona conversion for K1\npython /pub14/tea/nsc206/git_installs/KrakenTools/kreport2krona.py -r K1.kreport2 -o K1.krona\n#Krona conversion for K2\npython /pub14/tea/nsc206/git_installs/KrakenTools/kreport2krona.py -r K2.kreport2 -o K2.krona\n#Krona conversion for W1\npython /pub14/tea/nsc206/git_installs/KrakenTools/kreport2krona.py -r W1.kreport2 -o W1.krona\n\n\n-r is our input report file\n-o is our output krona text file\n\n\n\nLoop method\n\nRather than running the command for each line you can carry it out with a loop. If you run the below first ensure your current directory only has .kreport2 files that you want included.\n\nls -1 *kreport2 | sed \"s/.kreport2//\" | while read sample\ndo \npython /pub14/tea/nsc206/git_installs/KrakenTools/kreport2krona.py \\\n-r ${sample}.kreport2 \\\n-o ${sample}.krona\ndone\n\n\nThe actual content of the krona text file is not of interest as the file is only really useful for creating the interactive krona charts.",
-    "crumbs": [
-      "Reads",
-      "Taxonomy of reads",
-      "Krona"
     ]
   }
 ]
